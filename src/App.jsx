@@ -18,7 +18,7 @@ const queryClient = new QueryClient({
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools initialIsOpen={false} />
+      <ReactQueryDevtools initialIsOpen={false} buttonPosition="top-left" />
       {/* Swapped BrowserRouter to HashRouter to work with GitHub Pages */}
       <HashRouter>
         <Routes>
@@ -36,7 +36,7 @@ function App() {
       <Toaster
         position="top-right"
         gutter={12}
-        containerStyle={{ margin: "8px" }}
+        containerStyle={{ margin: "8px", maxHeight: "90dvh" }}
         toastOptions={{
           success: { duration: 3000 },
           error: { duration: 5000 },
