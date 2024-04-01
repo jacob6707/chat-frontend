@@ -3,6 +3,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import AppLayout from "./pages/AppLayout";
+import Channel from "./pages/Channel";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 
@@ -25,7 +26,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/app" element={<AppLayout />}>
             <Route index element={<h1>App Index</h1>} />
-            <Route path=":id" element={<h1>App ID</h1>} />
+            <Route path=":id" element={<Channel />} />
           </Route>
           <Route path="*" element={<h1>Not Found</h1>} />
         </Routes>

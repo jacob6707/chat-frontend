@@ -7,7 +7,7 @@ function Sidebar() {
       <header className="mx-auto px-6 py-4">
         <Logo />
       </header>
-      <div className="border-b-2 border-violet-950">
+      <div className="border-b border-slate-700">
         <div className="px-4 py-3">
           <h2 className="text-2xl font-semibold text-violet-100">Chats</h2>
         </div>
@@ -64,14 +64,16 @@ function Sidebar() {
           </div>
         </li>
       </ul>
-      <footer className="grid grid-cols-[auto_1fr_auto] items-center gap-4 border-t-2 border-violet-950 px-4 py-3">
-        <HiMiniUserCircle size={64} className="text-slate-600" />
-        <div className="">
-          <p>Username</p>
-          <p>Status</p>
+      <footer className="flex items-center gap-2 border-t border-slate-700 p-2">
+        <div className="flex basis-full items-center gap-2 rounded-lg py-1 hover:cursor-pointer hover:bg-slate-600 hover:bg-opacity-50">
+          <HiMiniUserCircle size={48} className="text-slate-600" />
+          <div className="text-sm">
+            <p>Username</p>
+            <p>Status</p>
+          </div>
         </div>
         <div className="rounded-full p-2 hover:cursor-pointer hover:bg-slate-600/50">
-          <HiOutlineCog6Tooth size={32} />
+          <HiOutlineCog6Tooth size={24} />
         </div>
       </footer>
     </aside>
