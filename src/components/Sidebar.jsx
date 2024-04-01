@@ -1,7 +1,10 @@
 import { HiMiniUserCircle, HiOutlineCog6Tooth } from "react-icons/hi2";
+import { useNavigate } from "react-router-dom";
 import Logo from "./Logo";
 
 function Sidebar() {
+  const navigate = useNavigate();
+
   return (
     <aside className="grid h-full max-h-dvh grid-rows-[auto_auto_1fr_auto] bg-slate-950">
       <header className="mx-auto px-6 py-4">
@@ -13,7 +16,10 @@ function Sidebar() {
         </div>
       </div>
       <ul className="flex max-h-full flex-col overflow-auto">
-        <li className="grid grid-cols-[auto_1fr_auto] items-center gap-4 px-4 py-3 hover:cursor-pointer hover:bg-slate-600/25">
+        <li
+          className="grid grid-cols-[auto_1fr_auto] items-center gap-4 px-4 py-3 hover:cursor-pointer hover:bg-slate-600/25"
+          onClick={() => navigate("1")}
+        >
           <HiMiniUserCircle size={64} className="text-slate-600" />
           <div>
             <p className="">Username</p>
@@ -23,7 +29,10 @@ function Sidebar() {
             </div>
           </div>
         </li>
-        <li className="grid grid-cols-[auto_1fr_auto] items-center gap-4 px-4 py-3 hover:cursor-pointer hover:bg-slate-600/25">
+        <li
+          className="grid grid-cols-[auto_1fr_auto] items-center gap-4 px-4 py-3 hover:cursor-pointer hover:bg-slate-600/25"
+          onClick={() => navigate("1")}
+        >
           <HiMiniUserCircle size={64} className="text-slate-600" />
           <div>
             <p className="">Username</p>
@@ -33,7 +42,10 @@ function Sidebar() {
             </div>
           </div>
         </li>
-        <li className="grid grid-cols-[auto_1fr_auto] items-center gap-4 px-4 py-3 hover:cursor-pointer hover:bg-slate-600/25">
+        <li
+          className="grid grid-cols-[auto_1fr_auto] items-center gap-4 px-4 py-3 hover:cursor-pointer hover:bg-slate-600/25"
+          onClick={() => navigate("1")}
+        >
           <HiMiniUserCircle size={64} className="text-slate-600" />
           <div>
             <p className="">Username</p>
@@ -43,7 +55,10 @@ function Sidebar() {
             </div>
           </div>
         </li>
-        <li className="grid grid-cols-[auto_1fr_auto] items-center gap-4 px-4 py-3 hover:cursor-pointer hover:bg-slate-600/25">
+        <li
+          className="grid grid-cols-[auto_1fr_auto] items-center gap-4 px-4 py-3 hover:cursor-pointer hover:bg-slate-600/25"
+          onClick={() => navigate("1")}
+        >
           <HiMiniUserCircle size={64} className="text-slate-600" />
           <div>
             <p className="">Username</p>
@@ -53,7 +68,10 @@ function Sidebar() {
             </div>
           </div>
         </li>
-        <li className="grid grid-cols-[auto_1fr_auto] items-center gap-4 px-4 py-3 hover:cursor-pointer hover:bg-slate-600/25">
+        <li
+          className="grid grid-cols-[auto_1fr_auto] items-center gap-4 px-4 py-3 hover:cursor-pointer hover:bg-slate-600/25"
+          onClick={() => navigate("1")}
+        >
           <HiMiniUserCircle size={64} className="text-slate-600" />
           <div>
             <p className="">Username</p>

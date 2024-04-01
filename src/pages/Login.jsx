@@ -1,10 +1,12 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import Logo from "../components/Logo";
 import Button from "../ui/Button";
 import Form from "../ui/Form";
 import Input from "../ui/Input";
 
 function Login() {
+  const navigate = useNavigate();
+
   return (
     <div className="grid h-dvh place-items-center overflow-auto bg-slate-950 text-slate-100">
       <div className="flex w-full flex-col items-center px-8">
@@ -24,7 +26,7 @@ function Login() {
             <Input type="password" id="password" />
           </Form.Row>
           <Form.Footer>
-            <Button className="w-full" onClick={(e) => e.preventDefault()}>
+            <Button className="w-full" onClick={() => navigate("/app")}>
               Log in
             </Button>
           </Form.Footer>
