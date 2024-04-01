@@ -1,7 +1,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
 import AppLayout from "./pages/AppLayout";
 import Channel from "./pages/Channel";
 import Login from "./pages/Login";
@@ -19,7 +19,8 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
-      <BrowserRouter>
+      {/* Swapped BrowserRouter to HashRouter to work with GitHub Pages */}
+      <HashRouter>
         <Routes>
           <Route index element={<Navigate to="/login" />} />
           <Route path="/login" element={<Login />} />
@@ -30,7 +31,7 @@ function App() {
           </Route>
           <Route path="*" element={<h1>Not Found</h1>} />
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
 
       <Toaster
         position="top-right"
