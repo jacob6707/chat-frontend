@@ -1,11 +1,14 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
-import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { GlobalStyles } from "twin.macro";
 import AppLayout from "./pages/AppLayout";
 import Channel from "./pages/Channel";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import ProtectedRoute from "./ui/ProtectedRoute";
+import Spinner from "./ui/Spinner";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -19,19 +22,26 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} buttonPosition="top-left" />
-      {/* Swapped BrowserRouter to HashRouter to work with GitHub Pages */}
-      <HashRouter>
+      <GlobalStyles />
+      <BrowserRouter>
         <Routes>
-          <Route index element={<Navigate to="/login" />} />
+          <Route index element={<Navigate to="/app" />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/app" element={<AppLayout />}>
-            <Route index element={<h1>App Index</h1>} />
+          <Route
+            path="/app"
+            element={
+              <ProtectedRoute>
+                <AppLayout />
+              </ProtectedRoute>
+            }
+          >
+            <Route index element={<Spinner />} />
             <Route path=":id" element={<Channel />} />
           </Route>
           <Route path="*" element={<h1>Not Found</h1>} />
         </Routes>
-      </HashRouter>
+      </BrowserRouter>
 
       <Toaster
         position="top-right"

@@ -1,5 +1,6 @@
 import { HiMiniUserCircle, HiOutlineCog6Tooth } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
+import UserAvatar from "../features/authentication/UserAvatar";
 import Logo from "./Logo";
 
 function Sidebar() {
@@ -83,13 +84,7 @@ function Sidebar() {
         </li>
       </ul>
       <footer className="flex items-center gap-2 border-t border-slate-700 p-2">
-        <div className="flex basis-full items-center gap-2 rounded-lg py-1 hover:cursor-pointer hover:bg-slate-600 hover:bg-opacity-50">
-          <HiMiniUserCircle size={48} className="text-slate-600" />
-          <div className="text-sm">
-            <p>Username</p>
-            <p>Status</p>
-          </div>
-        </div>
+        <UserAvatar />
         <div className="rounded-full p-2 hover:cursor-pointer hover:bg-slate-600/50">
           <HiOutlineCog6Tooth size={24} />
         </div>
