@@ -7,6 +7,7 @@ export function useLogout() {
 
   function logout() {
     queryClient.removeQueries();
+    localStorage.removeItem("token");
     navigate("/login", { replace: true });
   }
 

@@ -46,6 +46,8 @@ export async function getCurrentUser() {
 
   const data = await res.json();
 
+  if (res.status === 401) return null;
+
   if (!res.ok) {
     if (data.message) throw new Error(data.message);
     throw new Error("Failed to get user");

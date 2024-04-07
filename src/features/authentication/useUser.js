@@ -11,5 +11,7 @@ export function useUser() {
     queryFn: getCurrentUser,
   });
 
+  if (error) return { isLoading, user: null, isAuthenticated: false };
+
   return { isLoading, user, isAuthenticated: !!user?.username };
 }
