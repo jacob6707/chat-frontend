@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import AuthLayout from "../features/authentication/AuthLayout";
 import LoginForm from "../features/authentication/LoginForm";
@@ -17,6 +18,9 @@ function SignupLink() {
 }
 
 function Login() {
+  useEffect(function () {
+    document.title = "Log in - SwiftChat";
+  }, []);
   return (
     <AuthLayout>
       <LoginForm />

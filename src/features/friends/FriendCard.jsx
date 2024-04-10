@@ -27,7 +27,7 @@ function FriendCard({ friend, status }) {
         <HiMiniUserCircle className="h-12 w-12 text-slate-600" />
       )}
       <div>
-        <p className="">{friend.username}</p>
+        <p className="">{friend.displayName}</p>
         <div className="flex items-center justify-between">
           <span className="text-slate-400">{status}</span>
         </div>

@@ -19,6 +19,7 @@ function ProtectedRoute({ children }) {
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
+      localStorage.removeItem("token");
       navigate("/login");
     }
   }, [isLoading, isAuthenticated, navigate]);

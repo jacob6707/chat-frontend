@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { HiUsers } from "react-icons/hi2";
 import { useUser } from "../features/authentication/useUser";
 import AddFriendForm from "../features/friends/AddFriendForm";
@@ -9,6 +9,10 @@ import Spinner from "../ui/Spinner";
 function Friends() {
   const [addFriend, setAddFriend] = useState(false);
   const { user, isLoading } = useUser();
+
+  useEffect(function () {
+    document.title = "Friends - SwiftChat";
+  }, []);
 
   if (isLoading) return <Spinner />;
 

@@ -14,7 +14,7 @@ function Friend({ id, status }) {
   };
 
   return (
-    <div className="border-t border-slate-950 px-2 py-1 hover:rounded-lg hover:border-none hover:bg-slate-800">
+    <div className="border-t border-slate-950 px-2 py-1 last:border-b hover:rounded-lg hover:border-slate-800 hover:bg-slate-800">
       {error && <p>Friend not found</p>}
       {friend && <FriendCard friend={friend} status={friendStatus[status]} />}
     </div>

@@ -1,12 +1,44 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { intlFormatDistance } from "date-fns";
+import { useEffect } from "react";
 import { HiMiniUserCircle } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
+import { socket } from "../../socket";
 import Spinner from "../../ui/Spinner";
 import { useUser } from "./useUser";
 
 function DirectMessages() {
-  const { user, isLoading } = useUser();
+  const { user, isLoading, error } = useUser();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  useEffect(
+    function () {
+      if (!isLoading) {
+        user.directMessages.forEach(function (dm) {
+          socket.emit("joinChannel", {
+            token: localStorage.getItem("token"),
+            channelId: dm.channelId._id,
+          });
+        });
+      }
+
+      socket.on("message", (message) => {
+        console.log(message);
+        queryClient.invalidateQueries(["channel", message.channel]);
+      });
+
+      return function () {
+        if (!isLoading) {
+          user.directMessages.forEach(function (dm) {
+            socket.emit("leaveChannel", { channelId: dm.channelId._id });
+          });
+        }
+        socket.off("message");
+      };
+    },
+    [isLoading, user.directMessages, queryClient],
+  );
 
   if (isLoading) return <Spinner />;
 
