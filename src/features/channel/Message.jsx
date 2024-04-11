@@ -2,12 +2,14 @@ import { formatRelative } from "date-fns";
 import { HiUserCircle } from "react-icons/hi2";
 import { capitalizeFirstLetter } from "../../util/helpers";
 
-function Message({ message }) {
+function Message({ message, temp }) {
   return (
-    <div className="flex items-center gap-2 hover:bg-slate-800/25">
-      {message?.avatarUrl ? (
+    <div
+      className={`flex items-center gap-2 hover:bg-slate-800/25 ${temp ? "text-slate-400" : ""}`}
+    >
+      {message?.author?.avatarUrl ? (
         <img
-          src={message.avatarUrl}
+          src={message.author.avatarUrl}
           alt={message.author.displayName}
           className="h-12 w-12 rounded-full"
         />

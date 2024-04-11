@@ -1,11 +1,11 @@
-import Spinner from "../../ui/Spinner";
+import SpinnerMini from "../../ui/SpinnerMini";
 import FriendCard from "./FriendCard";
 import { useFriend } from "./useFriend";
 
 function Friend({ id, status }) {
   const { friend, isLoading, error } = useFriend(id);
 
-  if (isLoading) return <Spinner />;
+  if (isLoading) return <SpinnerMini />;
 
   const friendStatus = {
     1: "Outgoing friend request",

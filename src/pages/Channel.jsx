@@ -1,11 +1,13 @@
 import { Fragment, useEffect, useRef, useState } from "react";
+import toast from "react-hot-toast";
 import {
   HiChevronDown,
   HiFaceSmile,
+  HiMiniUserCircle,
   HiPaperAirplane,
   HiPlusCircle,
 } from "react-icons/hi2";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useUser } from "../features/authentication/useUser";
 import Message from "../features/channel/Message";
 import { useGetChannel } from "../features/channel/useGetChannel";
@@ -16,6 +18,8 @@ import SpinnerMini from "../ui/SpinnerMini";
 
 function Channel() {
   const { id } = useParams();
+  const navigate = useNavigate();
+
   const [focusInput, setFocusInput] = useState(false);
   const [sentMessage, setSentMessage] = useState(false);
 
@@ -30,8 +34,13 @@ function Channel() {
     fetchNextPage,
     isFetching,
   } = useGetChannelMessages(id);
-  const { message, isSendingMessage } = usePostChannelMessage(id);
   const { user, isLoading: isLoadingUser } = useUser();
+  const { message, isSendingMessage } = usePostChannelMessage(
+    id,
+    user.displayName || "You",
+  );
+
+  const isLoading = isLoadingChannel || isLoadingUser || isLoadingMessages;
 
   useEffect(
     function () {
@@ -45,8 +54,6 @@ function Channel() {
     [channel, user],
   );
 
-  const isLoading = isLoadingChannel || isLoadingUser || isLoadingMessages;
-
   const [content, setContent] = useState("");
 
   const chatBox = useRef();
@@ -56,29 +63,44 @@ function Channel() {
     function () {
       if (focusInput) {
         messageInput.current.focus();
+        chatBox.current.scrollIntoView({ block: "end" });
         setFocusInput(false);
       }
     },
     [focusInput],
   );
 
-  if (isLoading) return <Spinner />;
+  useEffect(
+    function () {
+      if (error || messagesError) {
+        toast.error("Failed to load channel");
+        navigate("/app");
+      }
+    },
+    [error, messagesError, navigate],
+  );
+
+  if (isLoading || error || messagesError) return <Spinner />;
 
   function handleSubmit(e) {
     e.preventDefault();
     if (!content) return;
     message(content, {
       onSettled: () => {
-        setContent("");
         setFocusInput(true);
         setSentMessage(true);
+        chatBox.current?.scrollIntoView({ block: "end" });
       },
     });
+    setContent("");
+    setFocusInput(true);
+    setSentMessage(true);
+    chatBox.current?.scrollIntoView({ block: "end" });
   }
 
   return (
-    <div className="relative grid h-full max-h-dvh grid-rows-[auto_1fr_auto]">
-      <header className="w-full border-b border-slate-950 bg-indigo-950 bg-opacity-35 px-4 py-3 text-xl">
+    <div className="relative grid h-full max-h-dvh grid-cols-[1fr_auto] grid-rows-[auto_1fr_auto]">
+      <header className="col-span-2 w-full border-b border-slate-950 bg-indigo-950 bg-opacity-35 px-4 py-3 text-xl">
         <h1>
           {channel.isDM
             ? channel.participants.find((p) => p._id !== user._id).displayName
@@ -131,6 +153,29 @@ function Channel() {
           <HiChevronDown size={24} />
         </button>
       )}
+      <aside className="row-span-2 bg-slate-950 bg-opacity-75 px-4 py-3 sm:w-80">
+        <h1 className="py-2 text-sm font-semibold uppercase text-slate-400">
+          Participants &mdash; {channel.participants.length}
+        </h1>
+        <div className="flex flex-col gap-2">
+          {channel.participants.map((participant) => (
+            <div key={participant._id} className="flex items-center gap-2">
+              {participant.avatarUrl ? (
+                <img
+                  src={participant.avatarUrl}
+                  alt={`Avatar of ${participant.displayName}`}
+                  className="h-12 w-12 flex-none rounded-full object-cover"
+                />
+              ) : (
+                <HiMiniUserCircle className="h-12 w-12 flex-none text-slate-600" />
+              )}
+              <span className="truncate text-lg">
+                {participant.displayName}
+              </span>
+            </div>
+          ))}
+        </div>
+      </aside>
       <footer className="w-full p-4">
         <form
           className="flex w-full items-center rounded-lg bg-indigo-900"
