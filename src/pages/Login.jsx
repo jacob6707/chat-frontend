@@ -1,47 +1,31 @@
-import { Link, NavLink } from "react-router-dom";
-import Logo from "../components/Logo";
-import Button from "../ui/Button";
-import Form from "../ui/Form";
-import Input from "../ui/Input";
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import AuthLayout from "../features/authentication/AuthLayout";
+import LoginForm from "../features/authentication/LoginForm";
+
+function SignupLink() {
+  return (
+    <div className="my-4">
+      <span className="text-sm sm:text-base">Don&apos;t have an account? </span>
+      <Link
+        to="/signup"
+        className="text-sm text-blue-700 hover:text-blue-600 hover:underline sm:text-base"
+      >
+        Sign up
+      </Link>
+    </div>
+  );
+}
 
 function Login() {
+  useEffect(function () {
+    document.title = "Log in - SwiftChat";
+  }, []);
   return (
-    <div className="grid h-dvh place-items-center overflow-auto bg-slate-950 text-slate-100">
-      <div className="flex w-full flex-col items-center px-8">
-        <div className="mt-8">
-          <NavLink to="/">
-            <Logo />
-          </NavLink>
-        </div>
-        <Form>
-          <Form.Header>
-            <h1>Log in to your account</h1>
-          </Form.Header>
-          <Form.Row label="Username">
-            <Input type="text" id="username" />
-          </Form.Row>
-          <Form.Row label="Password">
-            <Input type="password" id="password" />
-          </Form.Row>
-          <Form.Footer>
-            <Button className="w-full" onClick={(e) => e.preventDefault()}>
-              Log in
-            </Button>
-          </Form.Footer>
-        </Form>
-        <div className="my-4">
-          <span className="text-sm sm:text-base">
-            Don&apos;t have an account?{" "}
-          </span>
-          <Link
-            to="/signup"
-            className="text-sm text-blue-700 hover:text-blue-600 hover:underline sm:text-base"
-          >
-            Sign up
-          </Link>
-        </div>
-      </div>
-    </div>
+    <AuthLayout>
+      <LoginForm />
+      <SignupLink />
+    </AuthLayout>
   );
 }
 
