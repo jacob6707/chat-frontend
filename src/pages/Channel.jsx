@@ -59,7 +59,7 @@ function Channel() {
       <ChannelHeader
         name={channelName}
         isDM={channel.isDM}
-        online={channel?.online}
+        status={channel?.status}
       />
       <MessagesBox
         channelId={id}

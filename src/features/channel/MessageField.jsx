@@ -11,10 +11,7 @@ function MessageField({ channelId, username }) {
 
   const messageInput = useRef();
 
-  const { message, isSendingMessage } = usePostChannelMessage(
-    channelId,
-    username || "You",
-  );
+  const { message } = usePostChannelMessage(channelId, username || "You");
 
   useAutosizeTextArea(messageInput.current, 160, content);
 
@@ -54,30 +51,15 @@ function MessageField({ channelId, username }) {
         className="flex w-full items-center rounded-lg bg-indigo-900"
         onSubmit={handleSubmit}
       >
-        <button
-          className="h-full px-4 py-2 hover:text-white"
-          type="button"
-          disabled={isSendingMessage}
-        >
+        <button className="h-full px-4 py-2 hover:text-white" type="button">
           <HiPlusCircle size={32} />
         </button>
-        {/* <input
-            ref={messageInput}
-            type="text"
-            className="flex-1 bg-transparent py-2 placeholder:text-opacity-75 focus:outline-none"
-            placeholder="Message..."
-            disabled={isSendingMessage}
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            autoFocus
-          /> */}
         <textarea
           ref={messageInput}
           type="text"
           rows={1}
           className="flex-1 resize-none bg-transparent py-2 placeholder:text-opacity-75 focus:outline-none"
           placeholder="Message..."
-          disabled={isSendingMessage}
           value={content}
           onChange={(e) => setContent(e.target.value)}
           onKeyDown={(e) => {
@@ -91,7 +73,6 @@ function MessageField({ channelId, username }) {
         <div className="relative flex items-center">
           <button
             className="h-full px-4 py-2 hover:text-white"
-            disabled={isSendingMessage}
             onClick={() => {
               setEmojiPickerOpen((prev) => !prev);
             }}
@@ -112,11 +93,7 @@ function MessageField({ channelId, username }) {
           </div>
         </div>
         <div className="flex items-center border-l border-slate-600">
-          <button
-            className="h-full px-4 py-2 hover:text-white"
-            disabled={isSendingMessage}
-            type="submit"
-          >
+          <button className="h-full px-4 py-2 hover:text-white" type="submit">
             <HiPaperAirplane size={24} />
           </button>
         </div>

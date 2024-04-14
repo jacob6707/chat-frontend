@@ -30,7 +30,7 @@ function Message({ message }) {
             )}
           </span>
         </div>
-        <p className="w-full text-wrap break-words text-base">
+        <p className="w-full whitespace-pre-line text-wrap break-words text-base">
           {message.content}
         </p>
       </div>

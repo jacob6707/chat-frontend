@@ -8,6 +8,7 @@ function AddFriendForm() {
 
   function handleSubmit(e) {
     e.preventDefault();
+    if (!username) return;
     addFriend(username, {
       onSuccess: () => {
         setUsername("");
