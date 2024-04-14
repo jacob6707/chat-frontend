@@ -1,3 +1,33 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+::-webkit-scrollbar {
+  width: 1rem;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  padding: 0.25rem;
+  border: 0.25rem solid transparent;
+  background-color: theme("colors.slate.800");
+  background-clip: padding-box;
+  border-radius: 1rem;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: theme("colors.slate.600");
+}
+
+.EmojiPickerReact.epr-dark-theme {
+  --epr-bg-color: theme("colors.slate.800");
+  --epr-category-label-bg-color: theme("colors.slate.800");
+  --epr-text-color: theme("colors.slate.100");
+  --epr-search-input-bg-color: theme("colors.slate.700");
+  --epr-search-input-bg-color-active: theme("colors.slate.900");
+  --epr-highlight-color: theme("colors.slate.600");
+}

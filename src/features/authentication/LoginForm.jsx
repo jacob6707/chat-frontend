@@ -1,6 +1,6 @@
 import { useState } from "react";
+import Form from "../../ui/AuthForm";
 import Button from "../../ui/Button";
-import Form from "../../ui/Form";
 import Input from "../../ui/Input";
 import { useLogin } from "./useLogin";
 

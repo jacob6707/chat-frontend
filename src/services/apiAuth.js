@@ -36,22 +36,3 @@ export async function login(credentials) {
 
   return { user, token };
 }
-
-export async function getCurrentUser() {
-  const res = await fetch(`${API_URL}/users`, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-  });
-
-  const data = await res.json();
-
-  if (res.status === 401) return null;
-
-  if (!res.ok) {
-    if (data.message) throw new Error(data.message);
-    throw new Error("Failed to get user");
-  }
-
-  return data;
-}

@@ -11,7 +11,7 @@ export function useMessageFriend() {
     mutationFn: messageFriendApi,
     onSuccess: (data) => {
       navigate("/app/channels/" + data.channelId);
-      queryClient.invalidateQueries(["user"]);
+      queryClient.invalidateQueries({ queryKey: ["user"] });
     },
     onError: (error) => {
       toast.error(error);
