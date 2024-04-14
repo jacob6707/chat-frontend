@@ -1,14 +1,10 @@
-function ChannelHeader({ name, isDM = false, online = false }) {
+import StatusBlip from "../user/StatusBlip";
+
+function ChannelHeader({ name, isDM = false, status = "Offline" }) {
   return (
-    <header className="col-span-2 w-full border-b border-slate-950 bg-indigo-950 bg-opacity-35 px-4 py-3 text-xl">
-      <h1>
-        {name}
-        {isDM && online ? (
-          <span className="ml-2 inline-block h-3 w-3 rounded-full bg-green-500"></span>
-        ) : (
-          <span className="ml-2 inline-block h-3 w-3 rounded-full bg-slate-400"></span>
-        )}
-      </h1>
+    <header className="col-span-2 flex w-full items-center truncate border-b border-slate-950 bg-indigo-950 bg-opacity-35 px-4 py-3 text-xl">
+      <h1 className="truncate">{name}</h1>
+      {isDM && <StatusBlip size="channel" status={status} />}
     </header>
   );
 }

@@ -1,6 +1,7 @@
 import { intlFormatDistance } from "date-fns";
 import { HiMiniUserCircle, HiMiniUserGroup, HiXMark } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../../features/authentication/useUser";
 import { useDeleteChannel } from "../../features/channel/useDeleteChannel";
 import { useGetChannel } from "../../features/channel/useGetChannel";
 import StatusBlip from "../../features/user/StatusBlip";
@@ -9,10 +10,11 @@ import Spinner from "../../ui/Spinner";
 function DMChannel({ channelId }) {
   const { channel, isLoadingChannel, error } = useGetChannel(channelId);
   const { deleteChannel, isDeletingChannel } = useDeleteChannel();
+  const { user, isLoading: isLoadingUser } = useUser();
 
   const navigate = useNavigate();
 
-  if (isLoadingChannel) return <Spinner />;
+  if (isLoadingChannel || isLoadingUser) return <Spinner />;
 
   if (error)
     return (
@@ -38,15 +40,15 @@ function DMChannel({ channelId }) {
           <HiMiniUserGroup size={64} className="text-slate-600" />
         </div>
       )}
-      <div className="w-full">
-        <p>{channel.name}</p>
+      <div className="min-w-0 max-w-full ">
+        <p className="truncate">{channel.name}</p>
         <div className="flex items-center justify-between gap-4">
           {channel.messages.length > 0 ? (
             <>
               <span className="truncate text-slate-400">
                 {channel.messages.at(0).content}
               </span>
-              <span className="text-slate-400">
+              <span className="flex-none text-slate-400">
                 {intlFormatDistance(
                   channel.messages.at(0).createdAt,
                   new Date(),
@@ -63,7 +65,7 @@ function DMChannel({ channelId }) {
           )}
         </div>
       </div>
-      {!channel.isDM && (
+      {!channel.isDM && channel.owner === user._id && (
         <button
           className="hidden text-slate-300 hover:text-slate-100 group-hover:block"
           onClick={(e) => {
