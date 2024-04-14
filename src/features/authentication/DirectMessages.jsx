@@ -1,19 +1,13 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { intlFormatDistance } from "date-fns";
 import { useEffect } from "react";
-import {
-  HiMiniUserCircle,
-  HiMiniUserGroup,
-  HiUserGroup,
-  HiXMark,
-} from "react-icons/hi2";
+import { HiUserGroup } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
+import DMChannel from "../../components/sidebar/DMChannel";
 import { socket } from "../../services/socket";
 import Modal from "../../ui/Modal";
 import Spinner from "../../ui/Spinner";
 import CreateGroupDMForm from "../channel/CreateGroupDMForm";
 import { useDeleteChannel } from "../channel/useDeleteChannel";
-import StatusBlip from "../user/StatusBlip";
 import { useUser } from "./useUser";
 
 function DirectMessages() {
@@ -34,6 +28,9 @@ function DirectMessages() {
       }
 
       socket.on("message", (message) => {
+        queryClient.invalidateQueries({
+          queryKey: ["channelMessages", message.channel],
+        });
         queryClient.invalidateQueries({
           queryKey: ["channel", message.channel],
         });
@@ -82,68 +79,7 @@ function DirectMessages() {
       <ul className="flex flex-col">
         {user.directMessages.length ? (
           user.directMessages.map((dm) => (
-            <li
-              className="group mx-2 my-2 flex max-w-full items-center gap-4 truncate rounded-xl px-2 py-1 hover:cursor-pointer hover:bg-slate-600/25"
-              onClick={() => {
-                navigate(`channels/${dm.channelId._id}`);
-              }}
-              key={dm.channelId._id}
-            >
-              {dm.channelId.isDM ? (
-                <div className="relative">
-                  <HiMiniUserCircle size={64} className="text-slate-600" />
-                  <StatusBlip
-                    size="medium"
-                    status={dm?.userId?.status.current}
-                  />
-                </div>
-              ) : (
-                <div>
-                  <HiMiniUserGroup size={64} className="text-slate-600" />
-                </div>
-              )}
-              <div className="w-full">
-                <p>
-                  {dm.channelId.isDM
-                    ? dm?.userId.displayName
-                    : dm.channelId.name}
-                </p>
-                <div className="flex items-center justify-between gap-4">
-                  {dm.channelId.messages.length ? (
-                    <>
-                      <span className="truncate text-slate-400">
-                        {dm.channelId.messages.at(0).content}
-                      </span>
-                      <span className="text-slate-400">
-                        {intlFormatDistance(
-                          dm.channelId.messages.at(0).createdAt,
-                          new Date(),
-                          {
-                            style: "narrow",
-                          },
-                        )}
-                      </span>
-                    </>
-                  ) : (
-                    <span className="text-slate-400">
-                      {dm?.userId.status.current || "Offline"}
-                    </span>
-                  )}
-                </div>
-              </div>
-              {!dm.channelId.isDM && (
-                <button
-                  className="hidden text-slate-300 hover:text-slate-100 group-hover:block"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    deleteChannel(dm.channelId._id);
-                  }}
-                  disabled={isDeletingChannel}
-                >
-                  {isDeletingChannel ? "..." : <HiXMark size={24} />}
-                </button>
-              )}
-            </li>
+            <DMChannel channelId={dm.channelId._id} key={dm.channelId._id} />
           ))
         ) : (
           <p className="p-4">No direct messages</p>
