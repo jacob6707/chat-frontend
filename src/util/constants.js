@@ -1,2 +1,2 @@
-export const API_URL = "https://chat-api-dp6a.onrender.com";
+export const API_URL = "http://localhost:8080";
 export const MESSAGE_LIMIT = 50;
