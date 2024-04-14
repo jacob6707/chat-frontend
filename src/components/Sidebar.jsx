@@ -1,13 +1,29 @@
-import { HiOutlineCog6Tooth, HiUsers } from "react-icons/hi2";
+import {
+  HiCheckCircle,
+  HiMinusCircle,
+  HiOutlineArrowLeftOnRectangle,
+  HiOutlineCog6Tooth,
+  HiPauseCircle,
+  HiStopCircle,
+  HiUsers,
+} from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
 import DirectMessages from "../features/authentication/DirectMessages";
 import { useLogout } from "../features/authentication/useLogout";
-import UserAvatar from "../features/authentication/UserAvatar";
+import UserAvatar from "../features/user/UserAvatar";
+import { useUpdateStatus } from "../features/user/useUpdateStatus";
+import ContextMenu from "../ui/ContextMenu";
 import Logo from "./Logo";
 
 function Sidebar() {
   const navigate = useNavigate();
   const logout = useLogout();
+
+  const { updateStatus, isUpdatingStatus } = useUpdateStatus();
+
+  function handleLogout() {
+    logout();
+  }
 
   return (
     <aside className="grid h-full max-h-dvh grid-rows-[auto_auto_1fr_auto] bg-slate-950">
@@ -27,83 +43,53 @@ function Sidebar() {
         </ul>
       </nav>
       <DirectMessages />
-      {/* <div className="border-b border-slate-700">
-        <div className="px-4 py-3">
-          <h2 className="text-2xl font-semibold text-violet-100">Chats</h2>
-        </div>
-      </div>
-      <ul className="flex max-h-full flex-col overflow-auto">
-        <li
-          className="grid grid-cols-[auto_1fr_auto] items-center gap-4 px-4 py-3 hover:cursor-pointer hover:bg-slate-600/25"
-          onClick={() => navigate("1")}
-        >
-          <HiMiniUserCircle size={64} className="text-slate-600" />
-          <div>
-            <p className="">Username</p>
-            <div className="flex items-center justify-between">
-              <span className="text-slate-400">Last message</span>
-              <span className="text-slate-400">2d</span>
-            </div>
-          </div>
-        </li>
-        <li
-          className="grid grid-cols-[auto_1fr_auto] items-center gap-4 px-4 py-3 hover:cursor-pointer hover:bg-slate-600/25"
-          onClick={() => navigate("1")}
-        >
-          <HiMiniUserCircle size={64} className="text-slate-600" />
-          <div>
-            <p className="">Username</p>
-            <div className="flex items-center justify-between">
-              <span className="text-slate-400">Last message</span>
-              <span className="text-slate-400">2d</span>
-            </div>
-          </div>
-        </li>
-        <li
-          className="grid grid-cols-[auto_1fr_auto] items-center gap-4 px-4 py-3 hover:cursor-pointer hover:bg-slate-600/25"
-          onClick={() => navigate("1")}
-        >
-          <HiMiniUserCircle size={64} className="text-slate-600" />
-          <div>
-            <p className="">Username</p>
-            <div className="flex items-center justify-between">
-              <span className="text-slate-400">Last message</span>
-              <span className="text-slate-400">2d</span>
-            </div>
-          </div>
-        </li>
-        <li
-          className="grid grid-cols-[auto_1fr_auto] items-center gap-4 px-4 py-3 hover:cursor-pointer hover:bg-slate-600/25"
-          onClick={() => navigate("1")}
-        >
-          <HiMiniUserCircle size={64} className="text-slate-600" />
-          <div>
-            <p className="">Username</p>
-            <div className="flex items-center justify-between">
-              <span className="text-slate-400">Last message</span>
-              <span className="text-slate-400">2d</span>
-            </div>
-          </div>
-        </li>
-        <li
-          className="grid grid-cols-[auto_1fr_auto] items-center gap-4 px-4 py-3 hover:cursor-pointer hover:bg-slate-600/25"
-          onClick={() => navigate("1")}
-        >
-          <HiMiniUserCircle size={64} className="text-slate-600" />
-          <div>
-            <p className="">Username</p>
-            <div className="flex items-center justify-between">
-              <span className="text-slate-400">Last message</span>
-              <span className="text-slate-400">2d</span>
-            </div>
-          </div>
-        </li>
-      </ul> */}
       <footer className="flex items-center gap-2 border-t border-slate-700 p-2">
-        <UserAvatar />
+        <ContextMenu>
+          <ContextMenu.Toggle id="userMenu">
+            <UserAvatar />
+          </ContextMenu.Toggle>
+          <ContextMenu.List id="userMenu">
+            <ContextMenu.Button
+              icon={<HiCheckCircle className="text-green-500" />}
+              onClick={() => updateStatus("Online")}
+              disabled={isUpdatingStatus}
+            >
+              Online
+            </ContextMenu.Button>
+            <ContextMenu.Button
+              icon={<HiPauseCircle className="text-yellow-500" />}
+              onClick={() => updateStatus("Away")}
+              disabled={isUpdatingStatus}
+            >
+              Away
+            </ContextMenu.Button>
+            <ContextMenu.Button
+              icon={<HiMinusCircle className="text-red-500" />}
+              onClick={() => updateStatus("Do Not Disturb")}
+              disabled={isUpdatingStatus}
+            >
+              Do Not Disturb
+            </ContextMenu.Button>
+            <ContextMenu.Button
+              icon={<HiStopCircle className="text-slate-600" />}
+              onClick={() => updateStatus("Offline")}
+              disabled={isUpdatingStatus}
+            >
+              Invisible
+            </ContextMenu.Button>
+            <div className="my-2 border-t border-slate-600"></div>
+            <ContextMenu.Button
+              icon={<HiOutlineArrowLeftOnRectangle />}
+              onClick={handleLogout}
+              disabled={isUpdatingStatus}
+            >
+              Logout
+            </ContextMenu.Button>
+          </ContextMenu.List>
+        </ContextMenu>
         <button
           className="rounded-full p-2 hover:cursor-pointer hover:bg-slate-600/50"
-          onClick={logout}
+          onClick={() => {}}
         >
           <HiOutlineCog6Tooth size={24} />
         </button>

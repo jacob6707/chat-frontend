@@ -77,6 +77,24 @@ export async function createChannel(name, participants) {
   return data;
 }
 
+export async function deleteChannel(cid) {
+  const res = await fetch(`${API_URL}/channels/${cid}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    if (data.message) throw new Error(data.message);
+    throw new Error("Failed to delete channel");
+  }
+
+  return data;
+}
+
 export async function addParticipant(cid, uid) {
   const res = await fetch(`${API_URL}/channels/${cid}/add`, {
     method: "POST",

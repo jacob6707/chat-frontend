@@ -7,7 +7,7 @@ export function useRemoveFriend() {
   const { mutate: removeFriend, isPending: isRemovingFriend } = useMutation({
     mutationFn: removeFriendApi,
     onSettled: () => {
-      queryClient.invalidateQueries(["user"]);
+      queryClient.invalidateQueries({ queryKey: ["user"] });
     },
   });
 

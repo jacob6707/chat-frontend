@@ -10,7 +10,7 @@ function Friend({ id, status }) {
   const friendStatus = {
     1: "Outgoing friend request",
     2: "Incoming friend request",
-    3: friend.status,
+    3: friend.status.current || "Offline",
   };
 
   return (

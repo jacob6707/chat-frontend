@@ -57,7 +57,7 @@ function CreateGroupDMForm({ user, onCloseModal }) {
         className="rounded-lg bg-slate-600 px-4 py-2 text-slate-100"
       />
       <h3 className="text-lg font-semibold text-violet-100">Select Friends</h3>
-      <ul className="flex flex-col gap-2">
+      <ul className="flex max-h-48 flex-col gap-2 overflow-y-auto">
         {user.friends.map((friend) => (
           <FriendSelection
             key={friend._id}
@@ -78,7 +78,7 @@ function CreateGroupDMForm({ user, onCloseModal }) {
         className="rounded-lg bg-violet-600 px-4 py-2 text-violet-100"
         disabled={isCreatingChannel}
       >
-        Create
+        {isCreatingChannel ? <SpinnerMini /> : "Create"}
       </button>
     </form>
   );

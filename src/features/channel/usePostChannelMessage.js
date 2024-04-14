@@ -26,6 +26,7 @@ export function usePostChannelMessage(cid, author = "You") {
                 author: {
                   displayName: author,
                 },
+                temp: true,
               },
               ...old.pages[0].messages,
             ],
@@ -38,7 +39,7 @@ export function usePostChannelMessage(cid, author = "You") {
       return { previousMessages };
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(["channelMessages", cid]);
+      queryClient.invalidateQueries({ queryKey: ["channelMessages", cid] });
     },
   });
 

@@ -7,7 +7,7 @@ export function useAddFriend() {
   const { mutate: addFriend, isPending: isAddingFriend } = useMutation({
     mutationFn: (friend) => addFriendApi(friend),
     onSuccess: () => {
-      queryClient.invalidateQueries(["user"]);
+      queryClient.invalidateQueries({ queryKey: ["user"] });
     },
   });
 

@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 import { createChannel as createChannelApi } from "../../services/apiChannel";
 
 export function useCreateChannel() {
@@ -9,11 +10,11 @@ export function useCreateChannel() {
     isPending: isCreatingChannel,
     error,
   } = useMutation({
-    mutationFn: ({ name, participants }) => {
-      createChannelApi(name, participants);
-    },
+    mutationFn: ({ name, participants }) =>
+      createChannelApi(name, participants),
     onSuccess: () => {
-      queryClient.invalidateQueries("user");
+      toast.success("Channel created");
+      queryClient.invalidateQueries({ queryKey: ["user"] });
     },
   });
 

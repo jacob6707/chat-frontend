@@ -2,7 +2,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { GlobalStyles } from "twin.macro";
 import AppLayout from "./pages/AppLayout";
 import Channel from "./pages/Channel";
 import Friends from "./pages/Friends";
@@ -23,10 +22,10 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} buttonPosition="top-left" />
-      <GlobalStyles />
+      {/* <GlobalStyles /> */}
       <BrowserRouter>
         <Routes>
-          <Route index element={<Navigate to="/app" />} />
+          <Route index element={<Navigate to="/login" />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route
