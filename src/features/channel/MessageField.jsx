@@ -2,6 +2,7 @@ import EmojiPicker, { EmojiStyle } from "emoji-picker-react";
 import { useEffect, useRef, useState } from "react";
 import { HiFaceSmile, HiPaperAirplane, HiPlusCircle } from "react-icons/hi2";
 import useAutosizeTextArea from "../../hooks/useAutosizeTextarea";
+import { MESSAGE_LENGTH_LIMIT } from "../../util/constants";
 import { usePostChannelMessage } from "./usePostChannelMessage";
 
 function MessageField({ channelId, username }) {
@@ -35,7 +36,7 @@ function MessageField({ channelId, username }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (!content) return;
+    if (!content.trim()) return;
     message(content, {
       onSettled: () => {
         setFocusInput(true);
@@ -54,22 +55,30 @@ function MessageField({ channelId, username }) {
         <button className="h-full px-4 py-2 hover:text-white" type="button">
           <HiPlusCircle size={32} />
         </button>
-        <textarea
-          ref={messageInput}
-          type="text"
-          rows={1}
-          className="flex-1 resize-none bg-transparent py-2 placeholder:text-opacity-75 focus:outline-none"
-          placeholder="Message..."
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" && !e.shiftKey) {
-              e.preventDefault();
-              handleSubmit(e);
-            }
-          }}
-          autoFocus
-        />
+        <div className="relative flex flex-1 items-center py-2">
+          <textarea
+            ref={messageInput}
+            type="text"
+            rows={1}
+            className="flex-1 resize-none bg-transparent placeholder:text-opacity-75 focus:outline-none"
+            placeholder="Message..."
+            value={content}
+            maxLength={MESSAGE_LENGTH_LIMIT}
+            onChange={(e) => setContent(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                handleSubmit(e);
+              }
+            }}
+            autoFocus
+          />
+          {content.length > MESSAGE_LENGTH_LIMIT * 0.75 && (
+            <span className="absolute -right-10 bottom-0 select-none text-red-500 focus:outline-none focus-visible:outline-none">
+              -{MESSAGE_LENGTH_LIMIT - content.length}
+            </span>
+          )}
+        </div>
         <div className="relative flex items-center">
           <button
             className="h-full px-4 py-2 hover:text-white"

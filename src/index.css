@@ -21,6 +21,7 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background-color: theme("colors.slate.600");
+  cursor: default;
 }
 
 .EmojiPickerReact.epr-dark-theme {

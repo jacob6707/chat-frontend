@@ -1,20 +1,26 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
-import { HiUserGroup } from "react-icons/hi2";
-import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import {
+  HiChatBubbleOvalLeftEllipsis,
+  HiUserGroup,
+  HiUserMinus,
+  HiUserPlus,
+} from "react-icons/hi2";
+import { useLocation, useNavigate } from "react-router-dom";
 import DMChannel from "../../components/sidebar/DMChannel";
 import { socket } from "../../services/socket";
 import Modal from "../../ui/Modal";
 import Spinner from "../../ui/Spinner";
+import { truncate } from "../../util/helpers";
 import CreateGroupDMForm from "../channel/CreateGroupDMForm";
-import { useDeleteChannel } from "../channel/useDeleteChannel";
 import { useUser } from "./useUser";
 
 function DirectMessages() {
   const { user, isLoading, error } = useUser();
-  const { deleteChannel, isDeletingChannel } = useDeleteChannel();
 
   const navigate = useNavigate();
+  const location = useLocation();
   const queryClient = useQueryClient();
 
   useEffect(
@@ -28,12 +34,47 @@ function DirectMessages() {
       }
 
       socket.on("message", (message) => {
+        if (!location.pathname.includes(message.channel)) {
+          const channelName = truncate(
+            user.directMessages.find(
+              (dm) => dm.channelId._id === message.channel,
+            ).channelId.name,
+            10,
+          );
+          toast(
+            `[${channelName}] ${message.sender}: ${truncate(message.content, 40)}`,
+            {
+              icon: <HiChatBubbleOvalLeftEllipsis size={24} />,
+            },
+          );
+        }
         queryClient.invalidateQueries({
           queryKey: ["channelMessages", message.channel],
         });
         queryClient.invalidateQueries({
           queryKey: ["channel", message.channel],
         });
+      });
+
+      socket.on("friendRequestAccepted", (data) => {
+        toast(`${data.name} accepted your friend request.`, {
+          icon: <HiUserPlus size={24} />,
+        });
+        queryClient.invalidateQueries({ queryKey: ["user"] });
+      });
+
+      socket.on("friendRequest", (data) => {
+        toast(`${data.name} sent you a friend request.`, {
+          icon: <HiUserPlus size={24} />,
+        });
+        queryClient.invalidateQueries({ queryKey: ["user"] });
+      });
+
+      socket.on("friendRemoved", (data) => {
+        toast(`${data.name} removed you as a friend.`, {
+          icon: <HiUserMinus size={24} />,
+        });
+        queryClient.invalidateQueries({ queryKey: ["user"] });
       });
 
       socket.on("userJoined", (data) => {
@@ -44,6 +85,23 @@ function DirectMessages() {
         queryClient.invalidateQueries({ queryKey: ["channel", data.channel] });
       });
 
+      socket.on("channel", (data) => {
+        queryClient.invalidateQueries({ queryKey: ["user"] });
+        console.log(data);
+        if (data.action === "create") {
+          toast("You have been added to a new channel", {
+            icon: <HiChatBubbleOvalLeftEllipsis size={24} />,
+          });
+        }
+        if (
+          data.action === "delete" &&
+          location.pathname.includes(data.channel._id)
+        ) {
+          toast.error("The channel has been deleted");
+          navigate("/app");
+        }
+      });
+
       return function () {
         if (!isLoading) {
           user.directMessages.forEach(function (dm) {
@@ -52,9 +110,14 @@ function DirectMessages() {
         }
         socket.off("message");
         socket.off("userJoined");
+        socket.off("userLeft");
+        socket.off("friendRequestAccepted");
+        socket.off("friendRequest");
+        socket.off("friendRemoved");
+        socket.off("channel");
       };
     },
-    [isLoading, user.directMessages, queryClient],
+    [isLoading, user.directMessages, location.pathname, queryClient, navigate],
   );
 
   if (isLoading) return <Spinner />;

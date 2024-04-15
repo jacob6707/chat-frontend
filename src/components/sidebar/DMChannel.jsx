@@ -40,7 +40,7 @@ function DMChannel({ channelId }) {
           <HiMiniUserGroup size={64} className="text-slate-600" />
         </div>
       )}
-      <div className="min-w-0 max-w-full ">
+      <div className="w-full min-w-0">
         <p className="truncate">{channel.name}</p>
         <div className="flex items-center justify-between gap-4">
           {channel.messages.length > 0 ? (

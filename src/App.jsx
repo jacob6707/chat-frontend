@@ -1,7 +1,9 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
+import { HiCheckCircle, HiXCircle } from "react-icons/hi2";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { theme } from "twin.macro";
 import AppLayout from "./pages/AppLayout";
 import Channel from "./pages/Channel";
 import Friends from "./pages/Friends";
@@ -48,10 +50,26 @@ function App() {
       <Toaster
         position="top-right"
         gutter={12}
-        containerStyle={{ margin: "8px", maxHeight: "90dvh" }}
+        containerStyle={{
+          margin: "8px",
+          maxHeight: "90dvh",
+          minWidth: 0,
+        }}
         toastOptions={{
-          success: { duration: 3000 },
-          error: { duration: 5000 },
+          success: {
+            duration: 3000,
+            icon: <HiCheckCircle size={24} fill={theme`colors.green.500`} />,
+          },
+          error: {
+            duration: 5000,
+            icon: <HiXCircle size={24} fill={theme`colors.red.500`} />,
+          },
+          style: {
+            background: theme`colors.gray.800`,
+            color: theme`colors.white`,
+            minWidth: 0,
+            maxWidth: "40%",
+          },
         }}
       />
     </QueryClientProvider>

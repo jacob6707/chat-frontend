@@ -1,4 +1,4 @@
-import { API_URL } from "../util/constants";
+import { API_URL, MESSAGE_LENGTH_LIMIT } from "../util/constants";
 
 export async function getChannel(cid) {
   const res = await fetch(`${API_URL}/channels/${cid}`, {
@@ -38,6 +38,9 @@ export async function getChannelMessages(cid, page = 1, limit = 4) {
 }
 
 export async function postChannelMessage(cid, message) {
+  if (message.length > MESSAGE_LENGTH_LIMIT)
+    throw new Error("Message is too long");
+
   const res = await fetch(`${API_URL}/channels/${cid}`, {
     method: "POST",
     headers: {
