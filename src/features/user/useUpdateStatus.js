@@ -7,6 +7,21 @@ export function useUpdateStatus() {
 
   const { mutate: updateStatus, isPending: isUpdatingStatus } = useMutation({
     mutationFn: updateStatusApi,
+    onMutate: async (status) => {
+      await queryClient.cancelQueries(["user"]);
+
+      const previousUser = queryClient.getQueryData(["user"]);
+
+      queryClient.setQueryData(["user"], (old) => ({
+        ...old,
+        status: {
+          ...old.status,
+          current: status,
+        },
+      }));
+
+      return { previousUser };
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["user"] });
     },

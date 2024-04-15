@@ -58,20 +58,23 @@ function CreateGroupDMForm({ user, onCloseModal }) {
       />
       <h3 className="text-lg font-semibold text-violet-100">Select Friends</h3>
       <ul className="flex max-h-48 flex-col gap-2 overflow-y-auto">
-        {user.friends.map((friend) => (
-          <FriendSelection
-            key={friend._id}
-            friendId={friend.recipient}
-            selected={selectedFriends.includes(friend.recipient)}
-            onSelect={(id) =>
-              setSelectedFriends((friends) =>
-                friends.includes(id)
-                  ? friends.filter((f) => f !== id)
-                  : [...friends, id],
-              )
-            }
-          />
-        ))}
+        {user.friends.map(
+          (friend) =>
+            friend.status === 3 && (
+              <FriendSelection
+                key={friend._id}
+                friendId={friend.recipient}
+                selected={selectedFriends.includes(friend.recipient)}
+                onSelect={(id) =>
+                  setSelectedFriends((friends) =>
+                    friends.includes(id)
+                      ? friends.filter((f) => f !== id)
+                      : [...friends, id],
+                  )
+                }
+              />
+            ),
+        )}
       </ul>
       <button
         type="submit"

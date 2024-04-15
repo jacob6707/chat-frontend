@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 import { postChannelMessage } from "../../services/apiChannel";
 
 export function usePostChannelMessage(cid, author = "You") {
@@ -40,6 +41,13 @@ export function usePostChannelMessage(cid, author = "You") {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["channelMessages", cid] });
+    },
+    onError: (error, variables, context) => {
+      queryClient.setQueryData(
+        ["channelMessages", cid],
+        context.previousMessages,
+      );
+      toast.error("Failed to send message");
     },
   });
 

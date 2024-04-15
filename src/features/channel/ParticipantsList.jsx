@@ -1,4 +1,8 @@
 import { HiMiniUserCircle, HiPlus, HiStar, HiXMark } from "react-icons/hi2";
+import ContextMenu from "../../ui/ContextMenu";
+import Spinner from "../../ui/Spinner";
+import { useUser } from "../authentication/useUser";
+import AddParticipantButton from "./AddParticipantButton";
 import { useAddParticipant } from "./useAddParticipant";
 import { useRemoveParticipant } from "./useRemoveParticipant";
 
@@ -9,6 +13,9 @@ function ParticipantsList({ channel, userId, ownerId }) {
   const { removeParticipant, isRemovingParticipant } = useRemoveParticipant(
     channel._id,
   );
+  const { user, isLoading: isLoadingUser } = useUser();
+
+  if (isLoadingUser) return <Spinner />;
 
   function handleRemoveParticipant(participantId) {
     removeParticipant(participantId);
@@ -21,12 +28,41 @@ function ParticipantsList({ channel, userId, ownerId }) {
           Participants &mdash; {channel.participants.length}
         </h1>
         {ownerId === userId && (
-          <button
-            className="ml-auto text-slate-400 hover:text-white"
-            disabled={isAddingParticipant}
-          >
-            <HiPlus size={24} />
-          </button>
+          <ContextMenu align="bottom">
+            <ContextMenu.Toggle id="addParticipants">
+              <button
+                className="ml-auto text-slate-400 hover:text-white"
+                disabled={isAddingParticipant}
+              >
+                <HiPlus size={24} />
+              </button>
+            </ContextMenu.Toggle>
+            <ContextMenu.List id="addParticipants">
+              <div className="flex flex-col gap-2 px-4 py-3">
+                <header>
+                  <h1 className="text-lg">Add participants</h1>
+                  <p className="text-slate-400">Add friends to this channel</p>
+                </header>
+                <ul>
+                  {user.friends.map(
+                    (friend) =>
+                      friend.status === 3 &&
+                      !channel.participants.find(
+                        (p) => p._id === friend.recipient,
+                      ) && (
+                        <AddParticipantButton
+                          friendId={friend.recipient}
+                          onClick={() => {
+                            addParticipant(friend.recipient);
+                          }}
+                          key={friend._id}
+                        />
+                      ),
+                  )}
+                </ul>
+              </div>
+            </ContextMenu.List>
+          </ContextMenu>
         )}
       </div>
       <div className="flex flex-col gap-2">
