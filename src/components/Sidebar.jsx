@@ -10,9 +10,11 @@ import {
 import { useNavigate } from "react-router-dom";
 import DirectMessages from "../features/authentication/DirectMessages";
 import { useLogout } from "../features/authentication/useLogout";
+import SettingsWindow from "../features/settings/SettingsWindow";
 import UserAvatar from "../features/user/UserAvatar";
 import { useUpdateStatus } from "../features/user/useUpdateStatus";
 import ContextMenu from "../ui/ContextMenu";
+import Modal from "../ui/Modal";
 import Logo from "./Logo";
 
 function Sidebar() {
@@ -87,12 +89,16 @@ function Sidebar() {
             </ContextMenu.Button>
           </ContextMenu.List>
         </ContextMenu>
-        <button
-          className="rounded-full p-2 hover:cursor-pointer hover:bg-slate-600/50"
-          onClick={() => {}}
-        >
-          <HiOutlineCog6Tooth size={24} />
-        </button>
+        <Modal>
+          <Modal.Open opens="settings">
+            <button className="rounded-full p-2 hover:cursor-pointer hover:bg-slate-600/50">
+              <HiOutlineCog6Tooth size={24} />
+            </button>
+          </Modal.Open>
+          <Modal.Window name="settings">
+            <SettingsWindow />
+          </Modal.Window>
+        </Modal>
       </footer>
     </aside>
   );

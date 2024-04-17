@@ -9,6 +9,9 @@ const StyledModal = styled.div`
   position: fixed;
   top: 50%;
   left: 50%;
+  min-height: 0px;
+  max-height: 90vh;
+  overflow: hidden;
   transform: translate(-50%, -50%);
   ${tw`bg-indigo-900 rounded-lg shadow-lg text-indigo-100`};
   padding: 3.2rem 4rem;
@@ -85,7 +88,9 @@ function Window({ children, name }) {
         <Button onClick={() => close()}>
           <HiXMark />
         </Button>
-        <div>{cloneElement(children, { onCloseModal: close })}</div>
+        <div className="h-full">
+          {cloneElement(children, { onCloseModal: close })}
+        </div>
       </StyledModal>
     </Overlay>,
     document.body,

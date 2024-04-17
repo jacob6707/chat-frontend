@@ -2,7 +2,7 @@ import { Fragment, useEffect, useRef, useState } from "react";
 import { HiChevronDown } from "react-icons/hi2";
 import { useDetectScrolledToBottom } from "../../hooks/useDetectScrolledToBottom";
 import SpinnerMini from "../../ui/SpinnerMini";
-import Message from "./Message";
+import Message from "../message/Message";
 
 function MessagesBox({
   channelId = null,

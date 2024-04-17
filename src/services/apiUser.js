@@ -38,3 +38,45 @@ export async function getCurrentUser() {
 
   return data;
 }
+
+export async function updateUserSettings(settings) {
+  const formData = new FormData();
+  if (settings.avatar.length > 0) formData.append("avatar", settings.avatar[0]);
+  formData.append("displayName", settings.displayName);
+  formData.append("about", settings.about);
+
+  const res = await fetch(`${API_URL}/users/settings`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+    body: formData,
+  });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    if (data.message) throw new Error(data.message);
+    throw new Error("Failed to update settings");
+  }
+
+  return data;
+}
+
+export async function removeAvatar() {
+  const res = await fetch(`${API_URL}/users/avatar`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    if (data.message) throw new Error(data.message);
+    throw new Error("Failed to remove avatar");
+  }
+
+  return data;
+}

@@ -36,3 +36,23 @@ export async function login(credentials) {
 
   return { user, token };
 }
+
+export async function updatePassword(passwords) {
+  const res = await fetch(`${API_URL}/auth/password`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+    body: JSON.stringify(passwords),
+  });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    if (data.message) throw new Error(data.message);
+    throw new Error("Failed to update password");
+  }
+
+  return data;
+}
