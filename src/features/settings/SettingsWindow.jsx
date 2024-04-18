@@ -34,9 +34,9 @@ function SettingsWindow({ onCloseModal }) {
           </button> */}
         </ul>
       </aside>
-      <div className=" max-h-[70vh] min-h-0 overflow-y-auto px-4 py-2">
+      <div className="max-h-[70vh] min-h-0 overflow-y-auto px-4 py-2">
         <h1 className="text-xl">Settings</h1>
-        <div className="mt-4 grid min-w-96 gap-4">
+        <div className="mt-4 grid w-96 min-w-96 gap-4">
           {selectedTab === "account-settings" && (
             <AccountSettingsForm
               user={user}

@@ -1,7 +1,8 @@
 import { format, formatRelative } from "date-fns";
 import { useState } from "react";
 import { HiPencilAlt } from "react-icons/hi";
-import { HiTrash, HiUserCircle } from "react-icons/hi2";
+import { HiTrash } from "react-icons/hi2";
+import AvatarImage from "../../components/AvatarImage";
 import Tooltip from "../../ui/Tooltip";
 import { capitalizeFirstLetter } from "../../util/helpers";
 import { useUser } from "../authentication/useUser";
@@ -37,15 +38,11 @@ function Message({ message }) {
     <div
       className={`group/msg relative flex max-w-full items-center gap-2 hover:bg-slate-800/25 ${message?.temp ? "text-slate-400" : ""}`}
     >
-      {message?.author?.avatarUrl ? (
-        <img
-          src={message.author.avatarUrl}
-          alt={message.author.displayName}
-          className="h-12 w-12 flex-none self-start rounded-full"
-        />
-      ) : (
-        <HiUserCircle className="flex-none self-start" size={48} />
-      )}
+      <AvatarImage
+        avatarUrl={message.author.avatarUrl}
+        displayName={message.author.displayName}
+        size="small"
+      />
 
       <div className="min-w-0 flex-1">
         <div className="flex items-end gap-2">

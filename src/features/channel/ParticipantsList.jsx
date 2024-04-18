@@ -1,4 +1,5 @@
-import { HiMiniUserCircle, HiPlus, HiStar, HiXMark } from "react-icons/hi2";
+import { HiPlus, HiStar, HiXMark } from "react-icons/hi2";
+import AvatarImage from "../../components/AvatarImage";
 import ContextMenu from "../../ui/ContextMenu";
 import Spinner from "../../ui/Spinner";
 import { useUser } from "../authentication/useUser";
@@ -71,15 +72,11 @@ function ParticipantsList({ channel, userId, ownerId }) {
             key={participant._id}
             className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2"
           >
-            {participant.avatarUrl ? (
-              <img
-                src={participant.avatarUrl}
-                alt={`Avatar of ${participant.displayName}`}
-                className="h-12 w-12 flex-none rounded-full object-cover"
-              />
-            ) : (
-              <HiMiniUserCircle className="h-12 w-12 flex-none text-slate-600" />
-            )}
+            <AvatarImage
+              size="small"
+              avatarUrl={participant.avatarUrl}
+              displayName={participant.displayName}
+            />
             <div className="flex items-center gap-2 truncate">
               <span className="truncate text-lg">
                 {participant.displayName}

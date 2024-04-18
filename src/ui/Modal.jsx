@@ -6,13 +6,10 @@ import tw, { theme } from "twin.macro";
 import { useOutsideClick } from "../hooks/useOutsideClick";
 
 const StyledModal = styled.div`
-  position: fixed;
-  top: 50%;
-  left: 50%;
   min-height: 0px;
   max-height: 90vh;
   overflow: hidden;
-  transform: translate(-50%, -50%);
+  position: relative;
   ${tw`bg-indigo-900 rounded-lg shadow-lg text-indigo-100`};
   padding: 3.2rem 4rem;
   transition: all 0.5s;
@@ -20,6 +17,9 @@ const StyledModal = styled.div`
 
 const Overlay = styled.div`
   position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   top: 0;
   left: 0;
   width: 100%;
@@ -88,7 +88,7 @@ function Window({ children, name }) {
         <Button onClick={() => close()}>
           <HiXMark />
         </Button>
-        <div className="h-full">
+        <div className="w-fit">
           {cloneElement(children, { onCloseModal: close })}
         </div>
       </StyledModal>

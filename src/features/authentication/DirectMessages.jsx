@@ -17,7 +17,7 @@ import CreateGroupDMForm from "../channel/CreateGroupDMForm";
 import { useUser } from "./useUser";
 
 function DirectMessages() {
-  const { user, isLoading, error } = useUser();
+  const { user, isLoading } = useUser();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -34,7 +34,10 @@ function DirectMessages() {
       }
 
       socket.on("message", (message) => {
-        if (!location.pathname.includes(message.channel)) {
+        if (
+          message?.action === "create" &&
+          !location.pathname.includes(message.channel)
+        ) {
           const channelName = truncate(
             user.directMessages.find(
               (dm) => dm.channelId._id === message.channel,
@@ -87,7 +90,6 @@ function DirectMessages() {
 
       socket.on("channel", (data) => {
         queryClient.invalidateQueries({ queryKey: ["user"] });
-        console.log(data);
         if (data.action === "create") {
           toast("You have been added to a new channel", {
             icon: <HiChatBubbleOvalLeftEllipsis size={24} />,
@@ -99,6 +101,20 @@ function DirectMessages() {
         ) {
           toast.error("The channel has been deleted");
           navigate("/app");
+        }
+      });
+
+      socket.on("status", (data) => {
+        if (user.friends.some((friend) => friend.recipient === data._id)) {
+          queryClient.invalidateQueries({ queryKey: ["user"] });
+          const channel = user.directMessages.find(
+            (dm) =>
+              dm.channelId.participants.includes(data._id) && dm.channelId.isDM,
+          );
+          if (channel)
+            queryClient.invalidateQueries({
+              queryKey: ["channel", channel.channelId._id],
+            });
         }
       });
 
@@ -115,9 +131,17 @@ function DirectMessages() {
         socket.off("friendRequest");
         socket.off("friendRemoved");
         socket.off("channel");
+        socket.off("status");
       };
     },
-    [isLoading, user.directMessages, location.pathname, queryClient, navigate],
+    [
+      isLoading,
+      user.directMessages,
+      location.pathname,
+      queryClient,
+      navigate,
+      user.friends,
+    ],
   );
 
   if (isLoading) return <Spinner />;

@@ -1,9 +1,9 @@
 import {
   HiChatBubbleOvalLeftEllipsis,
   HiCheck,
-  HiMiniUserCircle,
   HiXMark,
 } from "react-icons/hi2";
+import AvatarImage from "../../components/AvatarImage";
 import { useAddFriend } from "./useAddFriend";
 import { useMessageFriend } from "./useMessageFriend";
 import { useRemoveFriend } from "./useRemoveFriend";
@@ -17,15 +17,11 @@ function FriendCard({ friend, status }) {
 
   return (
     <div className="grid grid-cols-[auto_1fr_auto] items-center gap-4">
-      {friend.avatarUrl ? (
-        <img
-          src={friend.avatarUrl}
-          alt={`Avatar of ${friend.displayName}`}
-          className="m-1 h-10 w-10 rounded-full object-cover"
-        />
-      ) : (
-        <HiMiniUserCircle className="h-12 w-12 text-slate-600" />
-      )}
+      <AvatarImage
+        avatarUrl={friend.avatarUrl}
+        displayName={friend.displayName}
+        size="small"
+      />
       <div>
         <p className="">{friend.displayName}</p>
         <div className="flex items-center justify-between">

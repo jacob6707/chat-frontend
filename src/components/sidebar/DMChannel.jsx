@@ -1,11 +1,12 @@
 import { intlFormatDistance } from "date-fns";
-import { HiMiniUserCircle, HiMiniUserGroup, HiXMark } from "react-icons/hi2";
+import { HiMiniUserGroup, HiXMark } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../../features/authentication/useUser";
 import { useDeleteChannel } from "../../features/channel/useDeleteChannel";
 import { useGetChannel } from "../../features/channel/useGetChannel";
 import StatusBlip from "../../features/user/StatusBlip";
 import Spinner from "../../ui/Spinner";
+import AvatarImage from "../AvatarImage";
 
 function DMChannel({ channelId }) {
   const { channel, isLoadingChannel, error } = useGetChannel(channelId);
@@ -31,8 +32,18 @@ function DMChannel({ channelId }) {
       }}
     >
       {channel.isDM ? (
-        <div className="relative">
-          <HiMiniUserCircle size={64} className="text-slate-600" />
+        <div className="relative flex-none">
+          <AvatarImage
+            size="medium"
+            avatarUrl={
+              channel.participants.find(
+                (participant) => participant._id !== user._id,
+              ).avatarUrl
+            }
+            displayName={channel.name}
+          />
+
+          {/* <HiMiniUserCircle size={64} className="text-slate-600" /> */}
           <StatusBlip size="medium" status={channel.status} />
         </div>
       ) : (
@@ -58,9 +69,13 @@ function DMChannel({ channelId }) {
                 )}
               </span>
             </>
-          ) : (
+          ) : channel.isDM ? (
             <span className="text-slate-400">
               {channel.status || "Offline"}
+            </span>
+          ) : (
+            <span className="text-slate-400">
+              {channel.participants.length} members
             </span>
           )}
         </div>
