@@ -20,8 +20,6 @@ function AccountSettingsForm({ user, changePassword, onCloseModal }) {
 
   const isUpdating = isUpdatingUserSettings || isRemovingAvatar;
 
-  console.log(errors);
-
   return (
     <form
       className="flex min-h-0 flex-col gap-4"

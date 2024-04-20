@@ -22,12 +22,8 @@ function SignupForm() {
     });
   }
 
-  function onError(errors) {
-    console.log(errors);
-  }
-
   return (
-    <Form onSubmit={handleSubmit(onSubmit, onError)}>
+    <Form onSubmit={handleSubmit(onSubmit)}>
       <Form.Header>
         <h1>Create an account</h1>
       </Form.Header>

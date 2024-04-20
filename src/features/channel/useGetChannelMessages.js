@@ -18,8 +18,6 @@ export function useGetChannelMessages(cid) {
     error,
     hasPreviousPage,
     fetchPreviousPage,
-    hasNextPage,
-    fetchNextPage,
     isFetching,
   } = useInfiniteQuery({
     queryKey: ["channelMessages", cid],
