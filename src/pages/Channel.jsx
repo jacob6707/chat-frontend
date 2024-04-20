@@ -73,7 +73,11 @@ function Channel() {
         userId={user._id}
         ownerId={channel.owner}
       />
-      <MessageField channelId={id} username={user.displayName} />
+      <MessageField
+        channelId={id}
+        username={user.displayName}
+        avatarUrl={user.avatarUrl}
+      />
     </div>
   );
 }
