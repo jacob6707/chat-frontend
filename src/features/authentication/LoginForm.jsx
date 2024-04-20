@@ -5,8 +5,8 @@ import Input from "../../ui/Input";
 import { useLogin } from "./useLogin";
 
 function LoginForm() {
-  const [username, setUsername] = useState("test@test.com");
-  const [password, setPassword] = useState("1234");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   const { login, isLoggingIn } = useLogin();
 
@@ -28,6 +28,7 @@ function LoginForm() {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           disabled={isLoggingIn}
+          autoComplete="username"
         />
       </Form.Row>
       <Form.Row label="Password">
@@ -37,6 +38,7 @@ function LoginForm() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           disabled={isLoggingIn}
+          autoComplete="current-password"
         />
       </Form.Row>
       <Form.Footer>
