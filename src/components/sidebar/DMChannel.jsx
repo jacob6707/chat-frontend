@@ -57,6 +57,9 @@ function DMChannel({ channelId }) {
           {channel.messages.length > 0 ? (
             <>
               <span className="truncate text-slate-400">
+                <span className="text-slate-100">
+                  {channel.messages.at(0).author === user._id && "You: "}
+                </span>
                 {channel.messages.at(0).content}
               </span>
               <span className="flex-none text-slate-400">
