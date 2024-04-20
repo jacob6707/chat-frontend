@@ -39,9 +39,7 @@ function DirectMessages() {
           !location.pathname.includes(message.channel)
         ) {
           const channelName = truncate(
-            user.directMessages.find(
-              (dm) => dm.channelId._id === message.channel,
-            ).channelId.name,
+            queryClient.getQueryData(["channel", message.channel])?.name,
             10,
           );
           toast(
