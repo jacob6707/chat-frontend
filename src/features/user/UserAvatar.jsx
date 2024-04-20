@@ -1,4 +1,4 @@
-import { HiMiniUserCircle } from "react-icons/hi2";
+import AvatarImage from "../../components/AvatarImage";
 import { useUser } from "../authentication/useUser";
 import StatusBlip from "./StatusBlip";
 
@@ -11,15 +11,11 @@ function UserAvatar({ onClick }) {
       onClick={(e) => onClick?.(e)}
     >
       <div className="relative">
-        {user.avatarUrl ? (
-          <img
-            src={user.avatarUrl}
-            alt={`Avatar of ${user.displayName}`}
-            className="m-1 h-10 w-10 rounded-full object-cover"
-          />
-        ) : (
-          <HiMiniUserCircle className="h-12 w-12 text-slate-600" />
-        )}
+        <AvatarImage
+          avatarUrl={user.avatarUrl}
+          displayName={user.displayName}
+          size="small"
+        />
 
         <StatusBlip status={user.status.current} size="small" />
       </div>

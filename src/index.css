@@ -24,6 +24,10 @@
   cursor: default;
 }
 
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
 .EmojiPickerReact.epr-dark-theme {
   --epr-bg-color: theme("colors.slate.800");
   --epr-category-label-bg-color: theme("colors.slate.800");

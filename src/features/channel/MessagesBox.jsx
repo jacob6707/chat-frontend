@@ -2,7 +2,7 @@ import { Fragment, useEffect, useRef, useState } from "react";
 import { HiChevronDown } from "react-icons/hi2";
 import { useDetectScrolledToBottom } from "../../hooks/useDetectScrolledToBottom";
 import SpinnerMini from "../../ui/SpinnerMini";
-import Message from "./Message";
+import Message from "../message/Message";
 
 function MessagesBox({
   channelId = null,
@@ -48,15 +48,19 @@ function MessagesBox({
               {isFetching ? <SpinnerMini /> : "Load more"}
             </button>
           )}
-          {messages?.pages.at(0).totalMessages > 0
-            ? messages?.pages.map((page, i) => (
-                <Fragment key={i}>
-                  {page.messages.toReversed().map((message) => (
-                    <Message key={message._id} message={message} />
-                  ))}
-                </Fragment>
-              ))
-            : "No messages"}
+          {messages?.pages.at(0).totalMessages > 0 ? (
+            messages?.pages.map((page, i) => (
+              <Fragment key={i}>
+                {page.messages.toReversed().map((message) => (
+                  <Message key={message._id} message={message} />
+                ))}
+              </Fragment>
+            ))
+          ) : (
+            <div className="text-center text-slate-400">
+              No messages yet. Send one to get the conversation going!
+            </div>
+          )}
         </section>
       </main>
       {sentMessage && (

@@ -7,10 +7,10 @@ import { theme } from "twin.macro";
 import AppLayout from "./pages/AppLayout";
 import Channel from "./pages/Channel";
 import Friends from "./pages/Friends";
+import Homepage from "./pages/Homepage";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import ProtectedRoute from "./ui/ProtectedRoute";
-import Spinner from "./ui/Spinner";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -38,7 +38,7 @@ function App() {
               </ProtectedRoute>
             }
           >
-            <Route index element={<Spinner />} />
+            <Route index element={<Homepage />} />
             <Route path="friends" element={<Friends />} />
             <Route path="channels" element={<Navigate to="/app" />} />
             <Route path="channels/:id" element={<Channel />} />

@@ -46,9 +46,7 @@ function CreateGroupDMForm({ user, onCloseModal }) {
 
   return (
     <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-      <h2 className="text-2xl font-semibold text-violet-100">
-        Create Group DM
-      </h2>
+      <h2 className="text-2xl font-semibold text-violet-100">Create Group</h2>
       <input
         type="text"
         placeholder="Group Name"

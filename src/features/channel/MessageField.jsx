@@ -1,6 +1,6 @@
 import EmojiPicker, { EmojiStyle } from "emoji-picker-react";
 import { useEffect, useRef, useState } from "react";
-import { HiFaceSmile, HiPaperAirplane, HiPlusCircle } from "react-icons/hi2";
+import { HiFaceSmile, HiPaperAirplane } from "react-icons/hi2";
 import useAutosizeTextArea from "../../hooks/useAutosizeTextarea";
 import { MESSAGE_LENGTH_LIMIT } from "../../util/constants";
 import { usePostChannelMessage } from "./usePostChannelMessage";
@@ -52,10 +52,10 @@ function MessageField({ channelId, username }) {
         className="flex w-full items-center rounded-lg bg-indigo-900"
         onSubmit={handleSubmit}
       >
-        <button className="h-full px-4 py-2 hover:text-white" type="button">
+        {/* <button className="h-full px-4 py-2 hover:text-white" type="button">
           <HiPlusCircle size={32} />
-        </button>
-        <div className="relative flex flex-1 items-center py-2">
+        </button> */}
+        <div className="relative flex flex-1 items-center py-2 pl-4">
           <textarea
             ref={messageInput}
             type="text"
@@ -102,7 +102,7 @@ function MessageField({ channelId, username }) {
           </div>
         </div>
         <div className="flex items-center border-l border-slate-600">
-          <button className="h-full px-4 py-2 hover:text-white" type="submit">
+          <button className="h-full px-4 py-3 hover:text-white" type="submit">
             <HiPaperAirplane size={24} />
           </button>
         </div>

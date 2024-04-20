@@ -34,13 +34,19 @@ function Friends() {
       </Header>
       {addFriend && <AddFriendForm />}
       <div className="px-4 py-2">
-        {user.friends.map((friend) => (
-          <Friend
-            key={friend._id}
-            id={friend.recipient}
-            status={friend.status}
-          />
-        ))}
+        {user.friends.length > 0 ? (
+          user.friends.map((friend) => (
+            <Friend
+              key={friend._id}
+              id={friend.recipient}
+              status={friend.status}
+            />
+          ))
+        ) : (
+          <p className="text-center text-slate-400">
+            You have no friends. Add friends to chat with them.
+          </p>
+        )}
       </div>
     </div>
   );

@@ -24,6 +24,7 @@ export function usePostChannelMessage(cid, author = "You") {
                 _id: Math.random().toString(),
                 content: message,
                 createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString(),
                 author: {
                   displayName: author,
                 },
