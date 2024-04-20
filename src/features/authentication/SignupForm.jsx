@@ -57,6 +57,10 @@ function SignupForm() {
               value: 3,
               message: "Username must be at least 3 characters long",
             },
+            maxLength: {
+              value: 20,
+              message: "Username must be at most 20 characters long",
+            },
             pattern: {
               value: /^[a-z0-9]+$/i,
               message: "Username must be alphanumeric",
