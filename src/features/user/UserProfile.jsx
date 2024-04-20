@@ -31,7 +31,7 @@ function UserProfile({ id }) {
   return (
     <div className="flex w-[640px] flex-col gap-4 rounded-lg bg-indigo-950 p-4">
       <div className="flex w-full items-center gap-4">
-        <div className="relative">
+        <div className="relative flex-none">
           <AvatarImage
             size="large"
             avatarUrl={user.avatarUrl}
