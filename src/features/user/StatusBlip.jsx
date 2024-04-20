@@ -4,6 +4,8 @@ function StatusBlip({ size = "medium", status = "Offline" }) {
       "absolute bottom-1 right-1 block h-3 w-3 rounded-full border-2 border-slate-950",
     medium:
       "absolute bottom-2 right-2 block h-3 w-3 rounded-full border-2 border-slate-950",
+    large:
+      "absolute bottom-2 right-2 block h-5 w-5 rounded-full border-2 border-slate-950",
     channel: "ml-2 inline-block h-3 w-3 flex-none rounded-full",
   };
 

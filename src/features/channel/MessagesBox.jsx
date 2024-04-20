@@ -48,15 +48,19 @@ function MessagesBox({
               {isFetching ? <SpinnerMini /> : "Load more"}
             </button>
           )}
-          {messages?.pages.at(0).totalMessages > 0
-            ? messages?.pages.map((page, i) => (
-                <Fragment key={i}>
-                  {page.messages.toReversed().map((message) => (
-                    <Message key={message._id} message={message} />
-                  ))}
-                </Fragment>
-              ))
-            : "No messages"}
+          {messages?.pages.at(0).totalMessages > 0 ? (
+            messages?.pages.map((page, i) => (
+              <Fragment key={i}>
+                {page.messages.toReversed().map((message) => (
+                  <Message key={message._id} message={message} />
+                ))}
+              </Fragment>
+            ))
+          ) : (
+            <div className="text-center text-slate-400">
+              No messages yet. Send one to get the conversation going!
+            </div>
+          )}
         </section>
       </main>
       {sentMessage && (

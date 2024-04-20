@@ -153,7 +153,7 @@ function DirectMessages() {
           <ul className="flex flex-col gap-2 px-4 py-3">
             <Modal.Open opens="groupDM">
               <button className="flex w-full gap-4 rounded-lg px-4 py-2 text-left text-lg font-semibold tracking-wide text-slate-300 hover:bg-slate-600 hover:bg-opacity-50 hover:text-slate-100 [&>svg]:h-7 [&>svg]:w-7">
-                <HiUserGroup className="" /> <span>Create Group DM</span>
+                <HiUserGroup className="" /> <span>Create Group</span>
               </button>
             </Modal.Open>
           </ul>
@@ -169,7 +169,9 @@ function DirectMessages() {
             <DMChannel channelId={dm.channelId._id} key={dm.channelId._id} />
           ))
         ) : (
-          <p className="p-4">No direct messages</p>
+          <p className="p-4 text-center text-slate-400">
+            You have no direct messages or groups.
+          </p>
         )}
       </ul>
     </div>

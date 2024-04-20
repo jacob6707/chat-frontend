@@ -3,7 +3,11 @@ import { useRemoveAvatar } from "./useRemoveAvatar";
 import { useUpdateUserSettings } from "./useUpdateUserSettings";
 
 function AccountSettingsForm({ user, changePassword, onCloseModal }) {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const { updateUserSettings, isUpdatingUserSettings } =
     useUpdateUserSettings();
   const { removeAvatar, isRemovingAvatar } = useRemoveAvatar();
@@ -15,6 +19,8 @@ function AccountSettingsForm({ user, changePassword, onCloseModal }) {
   }
 
   const isUpdating = isUpdatingUserSettings || isRemovingAvatar;
+
+  console.log(errors);
 
   return (
     <form
@@ -31,6 +37,9 @@ function AccountSettingsForm({ user, changePassword, onCloseModal }) {
             className="w-full rounded-lg bg-slate-800 p-2 text-base text-slate-50 focus:outline-none disabled:bg-slate-700 disabled:text-slate-400 disabled:hover:cursor-not-allowed"
             disabled
           />
+          {errors.username && (
+            <span className="text-red-400">{errors?.username?.message}</span>
+          )}
         </label>
         <label>
           <span>Email</span>
@@ -40,6 +49,9 @@ function AccountSettingsForm({ user, changePassword, onCloseModal }) {
             className="w-full rounded-lg bg-slate-800 p-2 text-base text-slate-50 focus:outline-none disabled:bg-slate-700 disabled:text-slate-400 disabled:hover:cursor-not-allowed"
             disabled
           />
+          {errors.email && (
+            <span className="text-red-400">{errors?.email?.message}</span>
+          )}
         </label>
         <label>
           <span>Display Name</span>
@@ -49,21 +61,34 @@ function AccountSettingsForm({ user, changePassword, onCloseModal }) {
             className="w-full rounded-lg bg-slate-800 p-2 text-base text-slate-50 focus:outline-none disabled:bg-slate-700 disabled:text-slate-400 disabled:hover:cursor-not-allowed"
             {...register("displayName", {
               required: true,
-              maxLength: 30,
-              minLength: 3,
+              maxLength: {
+                value: 30,
+                message: "Display name must be at most 30 characters long",
+              },
+              minLength: {
+                value: 3,
+                message: "Display name must be at least 3 characters long",
+              },
             })}
             disabled={isUpdating}
           />
+          {errors.displayName && (
+            <span className="text-red-400">{errors?.displayName?.message}</span>
+          )}
         </label>
         <label>
           <span>About</span>
           <textarea
             type="text"
             defaultValue={user.about}
+            maxLength={600}
             className="w-full rounded-lg bg-slate-800 p-2 text-base text-slate-50 focus:outline-none disabled:bg-slate-700 disabled:text-slate-400 disabled:hover:cursor-not-allowed"
-            {...register("about", { maxLength: 300 })}
+            {...register("about", { maxLength: 600 })}
             disabled={isUpdating}
           />
+          {errors.about && (
+            <span className="text-red-400">{errors?.about?.message}</span>
+          )}
         </label>
         <label>
           <span>Avatar</span>
@@ -84,6 +109,9 @@ function AccountSettingsForm({ user, changePassword, onCloseModal }) {
               >
                 Remove avatar
               </button>
+            )}
+            {errors.avatar && (
+              <span className="text-red-400">{errors?.avatar?.message}</span>
             )}
           </div>
         </label>

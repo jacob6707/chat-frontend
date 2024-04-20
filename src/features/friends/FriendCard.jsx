@@ -32,7 +32,10 @@ function FriendCard({ friend, status }) {
         {status === "Outgoing friend request" && (
           <button
             className="rounded-full bg-slate-900 p-2"
-            onClick={() => removeFriend(friend._id)}
+            onClick={(e) => {
+              e.stopPropagation();
+              removeFriend(friend._id);
+            }}
             disabled={isLoading}
           >
             <HiXMark />
@@ -42,14 +45,20 @@ function FriendCard({ friend, status }) {
           <>
             <button
               className="rounded-full bg-slate-900 p-2"
-              onClick={() => addFriend(friend._id)}
+              onClick={(e) => {
+                e.stopPropagation();
+                addFriend(friend._id);
+              }}
               disabled={isLoading}
             >
               <HiCheck />
             </button>
             <button
               className="rounded-full bg-slate-900 p-2"
-              onClick={() => removeFriend(friend._id)}
+              onClick={(e) => {
+                e.stopPropagation();
+                removeFriend(friend._id);
+              }}
               disabled={isLoading}
             >
               <HiXMark />
@@ -61,14 +70,20 @@ function FriendCard({ friend, status }) {
             <>
               <button
                 className="rounded-full bg-slate-900 p-2"
-                onClick={() => messageFriend(friend._id)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  messageFriend(friend._id);
+                }}
                 disabled={isLoading}
               >
                 <HiChatBubbleOvalLeftEllipsis />
               </button>
               <button
                 className="rounded-full bg-slate-900 p-2"
-                onClick={() => removeFriend(friend._id)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  removeFriend(friend._id);
+                }}
                 disabled={isLoading}
               >
                 <HiXMark />

@@ -4,7 +4,12 @@ import { useUpdatePassword } from "./useUpdatePassword";
 function ChangePasswordForm({ onClose, username }) {
   const { updatePassword, isUpdatingPassword } = useUpdatePassword();
 
-  const { register, handleSubmit, getValues } = useForm();
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    formState: { errors },
+  } = useForm();
 
   function onSubmit(data) {
     updatePassword(data, {
@@ -33,6 +38,9 @@ function ChangePasswordForm({ onClose, username }) {
             autoComplete="current-password"
             className="w-full rounded-lg bg-slate-800 p-2 text-base text-slate-50 focus:outline-none disabled:bg-slate-700 disabled:text-slate-400 disabled:hover:cursor-not-allowed"
           />
+          {errors.oldPassword && (
+            <span className="text-red-500">{errors?.oldPassword?.message}</span>
+          )}
         </label>
         <label>
           <span>New Password</span>
@@ -43,6 +51,9 @@ function ChangePasswordForm({ onClose, username }) {
             autoComplete="new-password"
             className="w-full rounded-lg bg-slate-800 p-2 text-base text-slate-50 focus:outline-none disabled:bg-slate-700 disabled:text-slate-400 disabled:hover:cursor-not-allowed"
           />
+          {errors.newPassword && (
+            <span className="text-red-500">{errors?.newPassword?.message}</span>
+          )}
         </label>
         <label>
           <span>Confirm New Password</span>
@@ -57,6 +68,11 @@ function ChangePasswordForm({ onClose, username }) {
             autoComplete="new-password"
             className="w-full rounded-lg bg-slate-800 p-2 text-base text-slate-50 focus:outline-none disabled:bg-slate-700 disabled:text-slate-400 disabled:hover:cursor-not-allowed"
           />
+          {errors.confirmPassword && (
+            <span className="text-red-500">
+              {errors?.confirmPassword?.message}
+            </span>
+          )}
         </label>
         <button
           className="w-full rounded-lg bg-blue-500 p-2 text-base text-white hover:bg-blue-600"

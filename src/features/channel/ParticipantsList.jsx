@@ -1,8 +1,10 @@
 import { HiPlus, HiStar, HiXMark } from "react-icons/hi2";
 import AvatarImage from "../../components/AvatarImage";
 import ContextMenu from "../../ui/ContextMenu";
+import Modal from "../../ui/Modal";
 import Spinner from "../../ui/Spinner";
 import { useUser } from "../authentication/useUser";
+import UserProfile from "../user/UserProfile";
 import AddParticipantButton from "./AddParticipantButton";
 import { useAddParticipant } from "./useAddParticipant";
 import { useRemoveParticipant } from "./useRemoveParticipant";
@@ -66,40 +68,47 @@ function ParticipantsList({ channel, userId, ownerId }) {
           </ContextMenu>
         )}
       </div>
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-1">
         {channel.participants.map((participant) => (
-          <div
-            key={participant._id}
-            className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2"
-          >
-            <AvatarImage
-              size="small"
-              avatarUrl={participant.avatarUrl}
-              displayName={participant.displayName}
-            />
-            <div className="flex items-center gap-2 truncate">
-              <span className="truncate text-lg">
-                {participant.displayName}
-              </span>
-              {ownerId === participant._id && (
-                <HiStar
-                  size={24}
-                  className="inline-block flex-none text-yellow-400"
+          <Modal key={participant._id}>
+            <Modal.Open opens={participant._id}>
+              <div className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2 rounded-lg p-1 hover:cursor-pointer hover:bg-slate-800/75">
+                <AvatarImage
+                  size="small"
+                  avatarUrl={participant.avatarUrl}
+                  displayName={participant.displayName}
                 />
-              )}
-            </div>
-            {!channel.isDM &&
-              ownerId === userId &&
-              participant._id !== userId && (
-                <button
-                  className="text-slate-400 hover:text-white"
-                  onClick={() => handleRemoveParticipant(participant._id)}
-                  disabled={isRemovingParticipant}
-                >
-                  <HiXMark size={24} />
-                </button>
-              )}
-          </div>
+                <div className="flex items-center gap-2 truncate">
+                  <span className="truncate text-lg">
+                    {participant.displayName}
+                  </span>
+                  {ownerId === participant._id && (
+                    <HiStar
+                      size={24}
+                      className="inline-block flex-none text-yellow-400"
+                    />
+                  )}
+                </div>
+                {!channel.isDM &&
+                  ownerId === userId &&
+                  participant._id !== userId && (
+                    <button
+                      className="text-slate-400 hover:text-white"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleRemoveParticipant(participant._id);
+                      }}
+                      disabled={isRemovingParticipant}
+                    >
+                      <HiXMark size={24} />
+                    </button>
+                  )}
+              </div>
+            </Modal.Open>
+            <Modal.Window name={participant._id}>
+              <UserProfile id={participant._id} />
+            </Modal.Window>
+          </Modal>
         ))}
       </div>
     </aside>
