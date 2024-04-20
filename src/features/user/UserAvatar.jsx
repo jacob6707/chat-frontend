@@ -10,7 +10,7 @@ function UserAvatar({ onClick }) {
       className="flex basis-full items-center gap-2 rounded-lg py-1 text-left hover:cursor-pointer hover:bg-slate-600 hover:bg-opacity-50"
       onClick={(e) => onClick?.(e)}
     >
-      <div className="relative">
+      <div className="relative flex-none">
         <AvatarImage
           avatarUrl={user.avatarUrl}
           displayName={user.displayName}
