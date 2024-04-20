@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { postChannelMessage } from "../../services/apiChannel";
 
-export function usePostChannelMessage(cid, author = "You") {
+export function usePostChannelMessage(cid, author = "You", avatarUrl = "") {
   const queryClient = useQueryClient();
 
   const { mutate: message, isPending: isSendingMessage } = useMutation({
@@ -27,6 +27,7 @@ export function usePostChannelMessage(cid, author = "You") {
                 updatedAt: new Date().toISOString(),
                 author: {
                   displayName: author,
+                  avatarUrl: avatarUrl,
                 },
                 temp: true,
               },

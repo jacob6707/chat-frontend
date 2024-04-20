@@ -5,14 +5,18 @@ import useAutosizeTextArea from "../../hooks/useAutosizeTextarea";
 import { MESSAGE_LENGTH_LIMIT } from "../../util/constants";
 import { usePostChannelMessage } from "./usePostChannelMessage";
 
-function MessageField({ channelId, username }) {
+function MessageField({ channelId, username, avatarUrl = "" }) {
   const [focusInput, setFocusInput] = useState(false);
   const [emojiPickerOpen, setEmojiPickerOpen] = useState(false);
   const [content, setContent] = useState("");
 
   const messageInput = useRef();
 
-  const { message } = usePostChannelMessage(channelId, username || "You");
+  const { message } = usePostChannelMessage(
+    channelId,
+    username || "You",
+    avatarUrl,
+  );
 
   useAutosizeTextArea(messageInput.current, 160, content);
 
