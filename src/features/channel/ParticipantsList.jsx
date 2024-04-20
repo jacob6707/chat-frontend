@@ -4,6 +4,7 @@ import ContextMenu from "../../ui/ContextMenu";
 import Modal from "../../ui/Modal";
 import Spinner from "../../ui/Spinner";
 import { useUser } from "../authentication/useUser";
+import StatusBlip from "../user/StatusBlip";
 import UserProfile from "../user/UserProfile";
 import AddParticipantButton from "./AddParticipantButton";
 import { useAddParticipant } from "./useAddParticipant";
@@ -72,12 +73,18 @@ function ParticipantsList({ channel, userId, ownerId }) {
         {channel.participants.map((participant) => (
           <Modal key={participant._id}>
             <Modal.Open opens={participant._id}>
-              <div className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2 rounded-lg p-1 hover:cursor-pointer hover:bg-slate-800/75">
-                <AvatarImage
-                  size="small"
-                  avatarUrl={participant.avatarUrl}
-                  displayName={participant.displayName}
-                />
+              <div className="flex items-center gap-2 rounded-lg p-1 hover:cursor-pointer hover:bg-slate-800/75">
+                <div className="relative flex-none">
+                  <AvatarImage
+                    size="small"
+                    avatarUrl={participant.avatarUrl}
+                    displayName={participant.displayName}
+                  />
+                  <StatusBlip
+                    size="small"
+                    status={participant.status.current}
+                  />
+                </div>
                 <div className="flex items-center gap-2 truncate">
                   <span className="truncate text-lg">
                     {participant.displayName}
@@ -93,7 +100,7 @@ function ParticipantsList({ channel, userId, ownerId }) {
                   ownerId === userId &&
                   participant._id !== userId && (
                     <button
-                      className="text-slate-400 hover:text-white"
+                      className="ml-auto text-slate-400 hover:text-white"
                       onClick={(e) => {
                         e.stopPropagation();
                         handleRemoveParticipant(participant._id);
