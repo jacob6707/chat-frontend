@@ -10,8 +10,8 @@ import { useUserById } from "./useUserById";
 function UserProfile({ id }) {
   const { user, isLoading, error } = useUserById(id);
   const { user: currentUser, isLoading: isLoadingCurrentUser } = useUser();
-  const { addFriend, isAddingFriend } = useAddFriend();
-  const { removeFriend, isRemovingFriend } = useRemoveFriend();
+  const { addFriend } = useAddFriend();
+  const { removeFriend } = useRemoveFriend();
 
   if (isLoading || isLoadingCurrentUser) return <Spinner />;
 

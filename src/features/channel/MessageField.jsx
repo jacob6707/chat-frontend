@@ -94,7 +94,7 @@ function MessageField({ channelId, username }) {
               open={emojiPickerOpen}
               theme="dark"
               emojiStyle={EmojiStyle.TWITTER}
-              onEmojiClick={(emoji, e) => {
+              onEmojiClick={(emoji) => {
                 setContent((prev) => prev + emoji.emoji);
               }}
               lazyLoadEmojis
