@@ -88,14 +88,14 @@ function DirectMessages() {
 
       socket.on("channel", (data) => {
         queryClient.invalidateQueries({ queryKey: ["user"] });
-        if (data.action === "create") {
+        if (data?.action === "create") {
           toast("You have been added to a new channel", {
             icon: <HiChatBubbleOvalLeftEllipsis size={24} />,
           });
         }
         if (
-          data.action === "delete" &&
-          location.pathname.includes(data.channel._id)
+          data?.action === "delete" &&
+          location.pathname.includes(data?.channel._id)
         ) {
           toast.error("The channel has been deleted");
           navigate("/app");
