@@ -10,16 +10,22 @@ export function useDeleteChannel() {
 
   const { mutate: deleteChannel, isPending: isDeletingChannel } = useMutation({
     mutationFn: deleteChannelApi,
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       toast.success("Channel deleted");
       if (location.pathname.includes(data.channelId)) {
         navigate("/app");
       }
+      await queryClient.invalidateQueries({ queryKey: ["user"] });
+      await queryClient.cancelQueries({
+        queryKey: ["channel", data.channelId],
+      });
       queryClient.removeQueries({ queryKey: ["channel", data.channelId] });
+      await queryClient.cancelQueries({
+        queryKey: ["channelMessages", data.channelId],
+      });
       queryClient.removeQueries({
         queryKey: ["channelMessages", data.channelId],
       });
-      queryClient.invalidateQueries({ queryKey: ["user"] });
     },
   });
 
