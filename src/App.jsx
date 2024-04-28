@@ -9,6 +9,7 @@ import Channel from "./pages/Channel";
 import Friends from "./pages/Friends";
 import Homepage from "./pages/Homepage";
 import Login from "./pages/Login";
+import PageNotFound from "./pages/PageNotFound";
 import Signup from "./pages/Signup";
 import ProtectedRoute from "./ui/ProtectedRoute";
 
@@ -24,7 +25,6 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} buttonPosition="top-left" />
-      {/* <GlobalStyles /> */}
       <BrowserRouter>
         <Routes>
           <Route index element={<Navigate to="/login" />} />
@@ -43,7 +43,7 @@ function App() {
             <Route path="channels" element={<Navigate to="/app" />} />
             <Route path="channels/:id" element={<Channel />} />
           </Route>
-          <Route path="*" element={<h1>Not Found</h1>} />
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
 
