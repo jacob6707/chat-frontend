@@ -31,41 +31,43 @@ function ParticipantsList({ channel, userId, ownerId }) {
         <h1 className="py-2 text-sm font-semibold uppercase text-slate-400">
           Participants &mdash; {channel.participants.length}
         </h1>
-        <ContextMenu align="bottom">
-          <ContextMenu.Toggle id="addParticipants">
-            <button
-              className="ml-auto text-slate-400 hover:text-white"
-              disabled={isAddingParticipant}
-            >
-              <HiPlus size={24} />
-            </button>
-          </ContextMenu.Toggle>
-          <ContextMenu.List id="addParticipants">
-            <div className="flex flex-col gap-2 px-4 py-3">
-              <header>
-                <h1 className="text-lg">Add participants</h1>
-                <p className="text-slate-400">Add friends to this channel</p>
-              </header>
-              <ul>
-                {user.friends.map(
-                  (friend) =>
-                    friend.status === 3 &&
-                    !channel.participants.find(
-                      (p) => p._id === friend.recipient,
-                    ) && (
-                      <AddParticipantButton
-                        friendId={friend.recipient}
-                        onClick={() => {
-                          addParticipant(friend.recipient);
-                        }}
-                        key={friend._id}
-                      />
-                    ),
-                )}
-              </ul>
-            </div>
-          </ContextMenu.List>
-        </ContextMenu>
+        {!channel.isDM && ownerId === userId && (
+          <ContextMenu align="bottom">
+            <ContextMenu.Toggle id="addParticipants">
+              <button
+                className="ml-auto text-slate-400 hover:text-white"
+                disabled={isAddingParticipant}
+              >
+                <HiPlus size={24} />
+              </button>
+            </ContextMenu.Toggle>
+            <ContextMenu.List id="addParticipants">
+              <div className="flex flex-col gap-2 px-4 py-3">
+                <header>
+                  <h1 className="text-lg">Add participants</h1>
+                  <p className="text-slate-400">Add friends to this channel</p>
+                </header>
+                <ul>
+                  {user.friends.map(
+                    (friend) =>
+                      friend.status === 3 &&
+                      !channel.participants.find(
+                        (p) => p._id === friend.recipient,
+                      ) && (
+                        <AddParticipantButton
+                          friendId={friend.recipient}
+                          onClick={() => {
+                            addParticipant(friend.recipient);
+                          }}
+                          key={friend._id}
+                        />
+                      ),
+                  )}
+                </ul>
+              </div>
+            </ContextMenu.List>
+          </ContextMenu>
+        )}
       </div>
       <div className="flex flex-col gap-1">
         {channel.participants.map((participant) => (
