@@ -2,7 +2,6 @@ import { cloneElement, createContext, useContext, useState } from "react";
 import { createPortal } from "react-dom";
 import { HiXMark } from "react-icons/hi2";
 import styled from "styled-components";
-import tw, { theme } from "twin.macro";
 import { useOutsideClick } from "../hooks/useOutsideClick";
 
 const StyledModal = styled.div`
@@ -10,7 +9,12 @@ const StyledModal = styled.div`
   max-height: 90vh;
   overflow: hidden;
   position: relative;
-  ${tw`bg-indigo-900 rounded-lg shadow-lg text-indigo-100`};
+  background-color: var(--color-indigo-900);
+  border-radius: 0.5rem;
+  box-shadow:
+    0 10px 15px -3px rgb(0 0 0 / 0.1),
+    0 4px 6px -4px rgb(0 0 0 / 0.1);
+  color: var(--color-indigo-100);
   padding: 3.2rem 4rem;
   transition: all 0.5s;
 `;
@@ -24,7 +28,7 @@ const Overlay = styled.div`
   left: 0;
   width: 100%;
   height: 100vh;
-  ${tw`bg-black/50`};
+  background-color: rgb(0 0 0 / 0.5);
   backdrop-filter: blur(2px);
   z-index: 1000;
   transition: all 0.5s;
@@ -51,7 +55,7 @@ const Button = styled.button`
     /* Sometimes we need both */
     /* fill: var(--color-grey-500);
     stroke: var(--color-grey-500); */
-    color: ${theme`colors.violet.100`};
+    color: var(--color-violet-100);
   }
 `;
 

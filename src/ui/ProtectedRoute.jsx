@@ -1,13 +1,12 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { theme } from "twin.macro";
 import { useUser } from "../features/authentication/useUser";
 import Spinner from "./Spinner";
 
 const FullPage = styled.div`
   height: 100vh;
-  background-color: ${theme`colors.slate.950`};
+  background-color: var(--color-slate-950);
   display: flex;
   align-items: center;
   justify-content: center;

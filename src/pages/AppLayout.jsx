@@ -36,9 +36,9 @@ function AppLayout() {
   );
 
   return (
-    <div className="grid h-dvh grid-cols-[24rem_auto] overflow-y-hidden bg-gradient-to-tr from-indigo-950 to-violet-950 text-indigo-100">
+    <div className="grid h-dvh grid-cols-[24rem_auto] overflow-y-hidden bg-linear-to-tr from-indigo-950 to-violet-950 text-indigo-100">
       <Sidebar />
-      <main className="bg-gradient-to-tr from-indigo-950 to-violet-950">
+      <main className="bg-linear-to-tr from-indigo-950 to-violet-950">
         <Outlet />
       </main>
     </div>

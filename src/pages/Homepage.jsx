@@ -23,7 +23,7 @@ function Homepage() {
         <Icon size={128} />
         <h1 className="text-3xl font-semibold text-slate-50">
           Welcome to <span className="tracking-wider">Swift</span>
-          <span className="bg-gradient-to-br from-purple-100 to-purple-500 bg-clip-text font-bold tracking-wider text-transparent">
+          <span className="bg-linear-to-br from-purple-100 to-purple-500 bg-clip-text font-bold tracking-wider text-transparent">
             Chat
           </span>
         </h1>
