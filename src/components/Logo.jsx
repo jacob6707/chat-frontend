@@ -7,7 +7,7 @@ function Logo() {
 
       <div>
         <span className="text-2xl tracking-wider">Swift</span>
-        <span className="bg-gradient-to-br from-purple-100 to-purple-500 bg-clip-text text-2xl font-bold tracking-wider text-transparent">
+        <span className="bg-linear-to-br from-purple-100 to-purple-500 bg-clip-text text-2xl font-bold tracking-wider text-transparent">
           Chat
         </span>
       </div>
